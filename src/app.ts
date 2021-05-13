@@ -16,11 +16,11 @@ import { ProjectRepository } from './gitlab/repositories/projects/repository';
 import { UserRepository } from './gitlab/repositories/users/repository';
 import { registrationScene } from './scenes/registration/registration-scene';
 
-const { BOT_TOKEN, PORT, URL } = config;
+const { BOT_TOKEN, PORT, WEBHOOK_URL } = config;
 const bot = new Telegraf<Scenes.SceneContext>(BOT_TOKEN);
 const tg = new Telegram(BOT_TOKEN);
 
-bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}:${PORT}`);
+bot.telegram.setWebhook(`${WEBHOOK_URL}/bot${BOT_TOKEN}:${PORT}`);
 
 tg.setMyCommands([help, menu, registration, showNeedReview]);
 
