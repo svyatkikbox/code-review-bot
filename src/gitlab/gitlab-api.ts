@@ -49,7 +49,7 @@ export class GitlabAPI {
 	async getCommentEvents(query: EventQuery): Promise<CommentEvent[]> {
 		const today = new Date();
 		const tomorrow = format(addDays(today, 1), 'y-LL-dd');
-		const daysAgo = format(subDays(today, 7), 'y-LL-dd');
+		const daysAgo = format(subDays(today, 14), 'y-LL-dd');
 
 		const url = `projects/${query.projectId}/events?target_type=${query.targetType}&action=${query.action}&after=${daysAgo}&before=${tomorrow}`;
 
