@@ -21,9 +21,6 @@ export class ProjectRepository implements IProjectRepository {
 			return null;
 		}
 
-		console.log('ProjectRepository::getProjectByName');
-		console.log(project);
-
 		return project;
 	}
 
@@ -41,17 +38,12 @@ export class ProjectRepository implements IProjectRepository {
 			return null;
 		}
 
-		console.log('ProjectRepository::getProjectUserByUsername');
-		console.log(user);
-
 		return user;
 	}
 
 	async getProjectReviewCalls(query: EventQuery): Promise<CommentEvent[]> {
 		const eventsData = await this.gitlabAPI.getCommentEvents(query);
 
-		console.log('ProjectRepository::getProjectReviewCalls');
-		console.log(eventsData);
 		return eventsData;
 	}
 
@@ -81,9 +73,6 @@ export class ProjectRepository implements IProjectRepository {
 			[AwardName.THUMBSUP]: reviewLikes,
 			[AwardName.THUMBSDOWN]: reviewDisLikes,
 		};
-
-		console.log('ProjectRepository::getMergeRequestReviewAwards');
-		console.log(awards);
 
 		return awards;
 	}
