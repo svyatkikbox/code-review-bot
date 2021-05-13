@@ -7,7 +7,6 @@ const stepId = 'REGISTRATION';
 const findUser = new Scenes.BaseScene<Scenes.SceneContext>(stepId);
 
 findUser.enter(ctx => ctx.reply('Enter username'));
-findUser.leave(ctx => ctx.reply('Bye'));
 findUser.command('exit', ctx => ctx.scene.leave());
 findUser.on('text', async ctx => {
 	const username = ctx.message.text;
@@ -28,7 +27,7 @@ findUser.on('text', async ctx => {
 
 	await ctx.reply('User was found');
 
-	return ctx.scene.enter('ExploreProject');
+	return ctx.scene.enter('FindProjects');
 });
 
 export const findUserStep = {
