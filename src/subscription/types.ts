@@ -4,5 +4,5 @@ type Project = {
 };
 
 export type Subscription = {
-	project: Project;
+	projects: Project[];
 };
