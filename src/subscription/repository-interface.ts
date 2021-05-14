@@ -1,7 +1,7 @@
 import { Subscription } from './types';
 
-interface ISubscription {
+interface ISubscriptionRepository {
 	getUserSubscriptions(username: string): Promise<Subscription>;
 }
 
-export { ISubscription };
+export { ISubscriptionRepository };

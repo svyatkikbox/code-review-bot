@@ -1,4 +1,4 @@
-import { ISubscription } from './repository-interface';
+import { ISubscriptionRepository } from './repository-interface';
 import { Subscription } from './types';
 
 // TODO перекинуть этот хардкод на взаимодействие с пользователем и сохранение в БД
@@ -9,7 +9,7 @@ const PROJECTS = [
 	{ name: 'spasi', id: 210 },
 	{ name: 'saga', id: 212 },
 ];
-class SubscriptionRepository implements ISubscription {
+class SubscriptionRepository implements ISubscriptionRepository {
 	constructor() {}
 
 	async getUserSubscriptions(username: string): Promise<Subscription> {
