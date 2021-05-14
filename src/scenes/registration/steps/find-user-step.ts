@@ -24,7 +24,7 @@ findUser.on('text', async ctx => {
 	}
 
 	if (user?.state !== UserState.ACTIVE) {
-		return ctx.reply(dictionary.userIsNotActive);
+		return ctx.reply(dictionary.steps.userIsNotActive);
 	}
 
 	await ctx.reply(dictionary.steps.userWasFound);
