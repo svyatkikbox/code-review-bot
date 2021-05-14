@@ -1,31 +1,33 @@
 import { Scenes } from 'telegraf';
-
 import { UserRepo } from '../../../app';
+import { dictionary } from '../../../dictionary';
 import { UserState } from '../../../gitlab/repositories/types';
 
 const stepId = 'REGISTRATION';
 const findUser = new Scenes.BaseScene<Scenes.SceneContext>(stepId);
 
-findUser.enter(ctx => ctx.reply('Enter username'));
+findUser.enter(ctx => ctx.reply(dictionary.steps.enterUserName));
 findUser.command('exit', ctx => ctx.scene.leave());
 findUser.on('text', async ctx => {
 	const username = ctx.message.text;
-	let userData = null;
+	let user = null;
 
 	try {
-		userData = await UserRepo.getUserByUsername(username);
+		user = await UserRepo.getUserByUsername(username);
 	} catch (error) {
-		console.error('Cannot find user');
-		return ctx.reply('Cannot find user');
+		console.error(error);
+		return ctx.reply(dictionary.smthWentWrong);
 	}
 
-	if (userData?.state !== UserState.ACTIVE) {
-		console.log('oooooops');
-		console.error('Looser is not active');
-		return ctx.reply('User is not active');
+	if (!user) {
+		return ctx.reply(dictionary.steps.userNotExists);
 	}
 
-	await ctx.reply('User was found');
+	if (user?.state !== UserState.ACTIVE) {
+		return ctx.reply(dictionary.userIsNotActive);
+	}
+
+	await ctx.reply(dictionary.steps.userWasFound);
 
 	return ctx.scene.enter('FindProjects');
 });
