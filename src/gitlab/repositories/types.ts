@@ -8,6 +8,10 @@ export enum AwardName {
 	THUMBSDOWN = 'thumbsdown',
 }
 
+export enum NoteableType {
+	MR = 'MergeRequest',
+}
+
 export type Project = {
 	id: number;
 	name: string;
@@ -23,6 +27,7 @@ type Note = {
 	body: string;
 	noteable_iid: number;
 	project_id: number;
+	noteable_type: NoteableType;
 };
 
 export type CommentEvent = {
@@ -31,12 +36,10 @@ export type CommentEvent = {
 	note: Note;
 };
 
-export type EventQuery = {
-	projectId: number;
-	targetType: string;
-	action: string;
-	after?: string;
-	before?: string;
+export type ReviewCall = {
+	link: string;
+	title: string;
+	awards: MergeRequestReviewAwards;
 };
 
 export type MergeRequest = {

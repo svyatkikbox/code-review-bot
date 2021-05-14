@@ -1,6 +1,5 @@
 import {
 	User,
-	EventQuery,
 	MergeRequest,
 	Project,
 	MergeRequestReviewAwards,
@@ -15,7 +14,7 @@ export interface IProjectRepository {
 		username: string
 	): Promise<User | null>;
 
-	getProjectReviewCalls(query: EventQuery): Promise<CommentEvent[]>;
+	getProjectReviewCalls(projectId: number): Promise<CommentEvent[]>;
 
 	getMergeRequest(
 		projectId: string,
