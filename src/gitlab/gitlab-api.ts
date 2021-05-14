@@ -54,6 +54,7 @@ export class GitlabAPI {
 		let end = false;
 		const events: CommentEvent[] = [];
 
+		// TODO если будет сильно тупить когда-нибудь, сделать асинхронным
 		while (end !== true) {
 			const url = `projects/${projectId}/events?target_type=note&action=commented&after=${nDaysAgo}&before=${tomorrow}&per_page=100&page=${page}`;
 
