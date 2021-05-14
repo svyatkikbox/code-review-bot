@@ -1,19 +1,23 @@
 import { NarrowedContext, Scenes } from 'telegraf';
-import { Update } from 'telegraf/typings/core/types/typegram';
-import { BotCommand } from 'typegram';
+import { BotCommand, Update } from 'typegram';
+import { IBotCommandHandler } from './bot-command-handler-interface';
 
-const help: BotCommand = {
-	command: 'help',
-	description: 'Показать справочную инфу',
-};
+class HelpCommand implements IBotCommandHandler {
+	get botCommand(): BotCommand {
+		return {
+			command: 'help',
+			description: 'Показать справочную инфу',
+		};
+	}
 
-const helpHandler = async (
-	ctx: NarrowedContext<
-		Scenes.SceneContext<Scenes.SceneSessionData>,
-		Update.MessageUpdate
-	>
-) => {
-	return ctx.reply('heeeeeeelp');
-};
+	async handler(
+		ctx: NarrowedContext<
+			Scenes.SceneContext<Scenes.SceneSessionData>,
+			Update.MessageUpdate
+		>
+	) {
+		return ctx.reply('heeeeeeelp');
+	}
+}
 
-export { help, helpHandler };
+export { HelpCommand };

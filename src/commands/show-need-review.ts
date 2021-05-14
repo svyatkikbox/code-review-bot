@@ -5,7 +5,7 @@ import { CommentEvent } from '../gitlab/repositories/types';
 import { ISubscriptionRepository } from '../subscription/repository-interface';
 import { IBotCommandHandler } from './bot-command-handler-interface';
 
-class ShowNeedReview implements IBotCommandHandler {
+class ShowNeedReviewCommand implements IBotCommandHandler {
 	constructor(
 		private readonly ProjectRepo: IProjectRepository,
 		private readonly SubscriptionRepo: ISubscriptionRepository
@@ -41,4 +41,4 @@ class ShowNeedReview implements IBotCommandHandler {
 	}
 }
 
-export { ShowNeedReview };
+export { ShowNeedReviewCommand };
