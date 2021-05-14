@@ -3,7 +3,6 @@ import { addDays, format, subDays } from 'date-fns';
 
 import {
 	CommentEvent,
-	EventQuery,
 	MergeRequestAward,
 	Project,
 	User,
@@ -46,15 +45,28 @@ export class GitlabAPI {
 		return response.data;
 	}
 
-	async getCommentEvents(query: EventQuery): Promise<CommentEvent[]> {
+	async getCommentEvents(projectId: number): Promise<CommentEvent[]> {
 		const today = new Date();
 		const tomorrow = format(addDays(today, 1), 'y-LL-dd');
-		const daysAgo = format(subDays(today, 14), 'y-LL-dd');
+		const nDaysAgo = format(subDays(today, 14), 'y-LL-dd');
 
-		const url = `projects/${query.projectId}/events?target_type=${query.targetType}&action=${query.action}&after=${daysAgo}&before=${tomorrow}`;
+		let page = 1;
+		let end = false;
+		const events: CommentEvent[] = [];
 
-		const response = await this.http.get(url);
+		while (end !== true) {
+			const url = `projects/${projectId}/events?target_type=note&action=commented&after=${nDaysAgo}&before=${tomorrow}&per_page=100&page=${page}`;
 
-		return response.data;
+			const response = await this.http.get(url);
+
+			events.push(...response.data);
+			page++;
+
+			if (!response.data.length) {
+				end = true;
+			}
+		}
+
+		return events;
 	}
 }
