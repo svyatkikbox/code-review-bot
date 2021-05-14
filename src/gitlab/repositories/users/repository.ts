@@ -13,9 +13,6 @@ export class UserRepository implements IUserRepository {
 			return null;
 		}
 
-		console.log('UserRepository::getUserByUsername');
-		console.log(user);
-
 		return user;
 	}
 }
