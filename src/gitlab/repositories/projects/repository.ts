@@ -2,9 +2,9 @@ import { GitlabAPI } from '../../gitlab-api';
 import {
 	AwardName,
 	CommentEvent,
-	EventQuery,
 	MergeRequest,
 	MergeRequestReviewAwards,
+	NoteableType,
 	Project,
 	User,
 } from '../types';
@@ -25,7 +25,7 @@ export class ProjectRepository implements IProjectRepository {
 	}
 
 	async getProjectUserByUsername(
-		projectId: string,
+		projectId: number,
 		username: string
 	): Promise<User | null> {
 		const usersData = await this.gitlabAPI.getProjectUserByUsername(
@@ -41,22 +41,34 @@ export class ProjectRepository implements IProjectRepository {
 		return user;
 	}
 
-	async getProjectReviewCalls(query: EventQuery): Promise<CommentEvent[]> {
-		const eventsData = await this.gitlabAPI.getCommentEvents(query);
+	async getProjectReviewCalls(projectId: number): Promise<[]> {
+		const mergeRequestsData = await this.gitlabAPI.getProjectMergeRequestsData(
+			projectId
+		);
 
-		return eventsData;
+		return [];
 	}
 
 	async getMergeRequest(
-		projectId: string,
-		mergeRequestId: string
+		projectId: number,
+		mergeRequestId: number
 	): Promise<MergeRequest> {
-		throw new Error('Method not implemented.');
+		const mergeRequestData = await this.gitlabAPI.getMergeRequestData(
+			projectId,
+			mergeRequestId
+		);
+
+		return {
+			title: mergeRequestData.title,
+			upvotes: mergeRequestData.upvotes,
+			downvotes: mergeRequestData.downvotes,
+			labels: mergeRequestData.labels,
+		};
 	}
 
 	async getMergeRequestReviewAwards(
-		projectId: string,
-		mergeRequestId: string
+		projectId: number,
+		mergeRequestId: number
 	): Promise<MergeRequestReviewAwards> {
 		const mergeRequestAwards = await this.gitlabAPI.getMergeRequestAwards(
 			projectId,

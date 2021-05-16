@@ -10,19 +10,19 @@ export interface IProjectRepository {
 	getProjectByName(name: string): Promise<Project | null>;
 
 	getProjectUserByUsername(
-		projectId: string,
+		projectId: number,
 		username: string
 	): Promise<User | null>;
 
 	getProjectReviewCalls(projectId: number): Promise<CommentEvent[]>;
 
 	getMergeRequest(
-		projectId: string,
-		mergeRequestId: string
+		projectId: number,
+		mergeRequestId: number
 	): Promise<MergeRequest>;
 
 	getMergeRequestReviewAwards(
-		projectId: string,
-		mergeRequestId: string
+		projectId: number,
+		mergeRequestId: number
 	): Promise<MergeRequestReviewAwards>;
 }
