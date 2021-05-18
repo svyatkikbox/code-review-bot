@@ -1,10 +1,8 @@
 import { GitlabAPI } from '../../gitlab-api';
 import {
 	AwardName,
-	CommentEvent,
 	MergeRequest,
 	MergeRequestReviewAwards,
-	NoteableType,
 	Project,
 	User,
 } from '../types';
