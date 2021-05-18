@@ -12,6 +12,10 @@ export enum NoteableType {
 	MR = 'MergeRequest',
 }
 
+export enum MergeRequestLabel {
+	NEED_REVIEW = 'need review',
+}
+
 export type Project = {
 	id: number;
 	name: string;
@@ -25,14 +29,14 @@ export type User = {
 
 type Note = {
 	body: string;
-	noteable_iid: number;
-	project_id: number;
-	noteable_type: NoteableType;
+	noteableIid: number;
+	projectId: number;
+	noteableType: NoteableType;
 };
 
 export type CommentEvent = {
-	project_id: number;
-	target_title: string;
+	projectId: number;
+	targetTitle: string;
 	note: Note;
 };
 
@@ -46,6 +50,7 @@ export type MergeRequest = {
 	title: string;
 	upvotes: number;
 	downvotes: number;
+	labels: MergeRequestLabel[];
 };
 
 export type MergeRequestAward = {
@@ -56,4 +61,25 @@ export type MergeRequestAward = {
 export type MergeRequestReviewAwards = {
 	[AwardName.THUMBSUP]: number;
 	[AwardName.THUMBSDOWN]: number;
+};
+
+export type MergeRequestDiscussion = {
+	individualNote: boolean;
+	notes: {
+		type: string | null;
+		body: string;
+		createdAt: string;
+		system: boolean;
+		resolvable: boolean;
+		resolved: boolean;
+	};
+};
+
+export type MergeRequestNote = {
+	type: string | null;
+	body: string;
+	createdAt: string;
+	system: boolean;
+	resolvable: boolean;
+	resolved: boolean;
 };

@@ -1,9 +1,11 @@
 import { AxiosInstance } from 'axios';
 import { addDays, format, subDays } from 'date-fns';
-
 import {
 	CommentEvent,
+	MergeRequest,
 	MergeRequestAward,
+	MergeRequestDiscussion,
+	MergeRequestNote,
 	Project,
 	User,
 } from './repositories/types';
@@ -24,7 +26,7 @@ export class GitlabAPI {
 	}
 
 	async getProjectUserByUsername(
-		projectId: string,
+		projectId: number,
 		username: string
 	): Promise<User[]> {
 		const response = await this.http.get(
@@ -34,9 +36,49 @@ export class GitlabAPI {
 		return response.data;
 	}
 
+	/**
+	 * collect data from all open project's MRs with "need review" label
+	 * @param projectId number
+	 */
+	async getProjectMergeRequestsData(
+		projectId: number
+	): Promise<MergeRequest[]> {
+		let page = 1;
+		let end = false;
+
+		const mergeRequestsData: MergeRequest[] = [];
+
+		// TODO сделать асинхронным
+		while (end !== true) {
+			const url = `projects/${projectId}/merge_requests?state=opened&labels=need%20review&per_page=100&page=${page}`;
+
+			const response = await this.http.get(url);
+
+			mergeRequestsData.push(...response.data);
+			page++;
+
+			if (!response.data.length) {
+				end = true;
+			}
+		}
+
+		return mergeRequestsData;
+	}
+
+	async getMergeRequestData(
+		projectId: number,
+		mergeRequestId: number
+	): Promise<MergeRequest> {
+		const response = await this.http.get(
+			`projects/${projectId}/merge_requests/${mergeRequestId}/`
+		);
+
+		return response.data;
+	}
+
 	async getMergeRequestAwards(
-		projectId: string,
-		mergeRequestId: string
+		projectId: number,
+		mergeRequestId: number
 	): Promise<MergeRequestAward[]> {
 		const response = await this.http.get(
 			`/projects/${projectId}/merge_requests/${mergeRequestId}/award_emoji/`
@@ -45,7 +87,7 @@ export class GitlabAPI {
 		return response.data;
 	}
 
-	async getCommentEvents(projectId: number): Promise<CommentEvent[]> {
+	async getProjectCommentEvents(projectId: number): Promise<CommentEvent[]> {
 		const today = new Date();
 		const tomorrow = format(addDays(today, 1), 'y-LL-dd');
 		const nDaysAgo = format(subDays(today, 14), 'y-LL-dd');
@@ -54,7 +96,7 @@ export class GitlabAPI {
 		let end = false;
 		const events: CommentEvent[] = [];
 
-		// TODO если будет сильно тупить когда-нибудь, сделать асинхронным
+		// TODO сделать асинхронным
 		while (end !== true) {
 			const url = `projects/${projectId}/events?target_type=note&action=commented&after=${nDaysAgo}&before=${tomorrow}&per_page=100&page=${page}`;
 
@@ -69,5 +111,27 @@ export class GitlabAPI {
 		}
 
 		return events;
+	}
+
+	async getMergeRequestDiscussions(
+		projectId: number,
+		mergeRequestId: number
+	): Promise<MergeRequestDiscussion[]> {
+		const response = await this.http.get(
+			`/projects/${projectId}/merge_requests/${mergeRequestId}/discussions/`
+		);
+
+		return response.data;
+	}
+
+	async getMergeRequestNotes(
+		projectId: number,
+		mergeRequestId: number
+	): Promise<MergeRequestNote[]> {
+		const response = await this.http.get(
+			`/projects/${projectId}/merge_requests/${mergeRequestId}/notes/`
+		);
+
+		return response.data;
 	}
 }
