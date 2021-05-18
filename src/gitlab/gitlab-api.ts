@@ -1,7 +1,5 @@
 import { AxiosInstance } from 'axios';
-import { addDays, format, subDays } from 'date-fns';
 import {
-	CommentEvent,
 	MergeRequest,
 	MergeRequestAward,
 	MergeRequestDiscussion,
@@ -46,7 +44,7 @@ export class GitlabAPI {
 		let page = 1;
 		let end = false;
 
-		const mergeRequestsData: MergeRequest[] = [];
+		const mergeRequestsRawData = [];
 
 		// TODO сделать асинхронным
 		while (end !== true) {
@@ -54,7 +52,7 @@ export class GitlabAPI {
 
 			const response = await this.http.get(url);
 
-			mergeRequestsData.push(...response.data);
+			mergeRequestsRawData.push(...response.data);
 			page++;
 
 			if (!response.data.length) {
@@ -62,18 +60,18 @@ export class GitlabAPI {
 			}
 		}
 
-		return mergeRequestsData;
-	}
-
-	async getMergeRequestData(
-		projectId: number,
-		mergeRequestId: number
-	): Promise<MergeRequest> {
-		const response = await this.http.get(
-			`projects/${projectId}/merge_requests/${mergeRequestId}/`
+		const mergeRequestsData: MergeRequest[] = mergeRequestsRawData.map(
+			mrData => ({
+				id: mrData.iid,
+				title: mrData.title,
+				upvotes: mrData.upvotes,
+				downvotes: mrData.downvotes,
+				labels: mrData.labels,
+				webUrl: mrData.web_url,
+			})
 		);
 
-		return response.data;
+		return mergeRequestsData;
 	}
 
 	async getMergeRequestAwards(
@@ -85,32 +83,6 @@ export class GitlabAPI {
 		);
 
 		return response.data;
-	}
-
-	async getProjectCommentEvents(projectId: number): Promise<CommentEvent[]> {
-		const today = new Date();
-		const tomorrow = format(addDays(today, 1), 'y-LL-dd');
-		const nDaysAgo = format(subDays(today, 14), 'y-LL-dd');
-
-		let page = 1;
-		let end = false;
-		const events: CommentEvent[] = [];
-
-		// TODO сделать асинхронным
-		while (end !== true) {
-			const url = `projects/${projectId}/events?target_type=note&action=commented&after=${nDaysAgo}&before=${tomorrow}&per_page=100&page=${page}`;
-
-			const response = await this.http.get(url);
-
-			events.push(...response.data);
-			page++;
-
-			if (!response.data.length) {
-				end = true;
-			}
-		}
-
-		return events;
 	}
 
 	async getMergeRequestDiscussions(

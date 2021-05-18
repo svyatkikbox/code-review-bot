@@ -1,11 +1,5 @@
 import { GitlabAPI } from '../../gitlab-api';
-import {
-	AwardName,
-	MergeRequest,
-	MergeRequestReviewAwards,
-	Project,
-	User,
-} from '../types';
+import { AwardName, MergeRequestReviewAwards, Project, User } from '../types';
 import { IProjectRepository } from './repository-interface';
 
 export class ProjectRepository implements IProjectRepository {
@@ -44,24 +38,21 @@ export class ProjectRepository implements IProjectRepository {
 			projectId
 		);
 
+		for (const mrData of mergeRequestsData) {
+			const mergeRequestsAwards = await this.getMergeRequestReviewAwards(
+				projectId,
+				mrData.id
+			);
+			const mergeRequestDiscussions =
+				await this.gitlabAPI.getMergeRequestDiscussions(projectId, mrData.id);
+
+			const mergeRequestNotes = await this.gitlabAPI.getMergeRequestNotes(
+				projectId,
+				mrData.id
+			);
+		}
+
 		return [];
-	}
-
-	async getMergeRequest(
-		projectId: number,
-		mergeRequestId: number
-	): Promise<MergeRequest> {
-		const mergeRequestData = await this.gitlabAPI.getMergeRequestData(
-			projectId,
-			mergeRequestId
-		);
-
-		return {
-			title: mergeRequestData.title,
-			upvotes: mergeRequestData.upvotes,
-			downvotes: mergeRequestData.downvotes,
-			labels: mergeRequestData.labels,
-		};
 	}
 
 	async getMergeRequestReviewAwards(

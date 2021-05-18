@@ -47,10 +47,12 @@ export type ReviewCall = {
 };
 
 export type MergeRequest = {
+	id: number;
 	title: string;
 	upvotes: number;
 	downvotes: number;
 	labels: MergeRequestLabel[];
+	webUrl: string;
 };
 
 export type MergeRequestAward = {
