@@ -6,6 +6,6 @@ export default Object.freeze({
 	GITLAB_URL: process.env.GITLAB_URL as string,
 	GITLAB_TOKEN: process.env.GITLAB_TOKEN as string,
 
-	WEBHOOK_URL: 'https://dull-snake-35.loca.lt',
+	WEBHOOK_URL: process.env.WEBHOOK_URL as string,
 	PORT: process.env.PORT || 5000,
 });
