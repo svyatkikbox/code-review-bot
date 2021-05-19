@@ -43,8 +43,6 @@ export class ProjectRepository implements IProjectRepository {
 				projectId,
 				mrData.id
 			);
-			const mergeRequestDiscussions =
-				await this.gitlabAPI.getMergeRequestDiscussions(projectId, mrData.id);
 
 			const mergeRequestNotes = await this.gitlabAPI.getMergeRequestNotes(
 				projectId,
