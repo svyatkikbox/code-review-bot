@@ -1,9 +1,13 @@
 import { AxiosInstance } from 'axios';
 import {
+	AwardName,
 	MergeRequest,
 	MergeRequestAward,
+	MergeRequestAwardRaw,
 	MergeRequestDiscussion,
 	MergeRequestNote,
+	MergeRequestNoteRaw,
+	MergeRequestReviewAwards,
 	Project,
 	User,
 } from './repositories/types';
@@ -77,12 +81,25 @@ export class GitlabAPI {
 	async getMergeRequestAwards(
 		projectId: number,
 		mergeRequestId: number
-	): Promise<MergeRequestAward[]> {
+	): Promise<MergeRequestReviewAwards> {
 		const response = await this.http.get(
 			`/projects/${projectId}/merge_requests/${mergeRequestId}/award_emoji/`
 		);
+		const mergeRequestAwards: MergeRequestAwardRaw[] = response.data;
+		const awards: MergeRequestAward[] = mergeRequestAwards.map(award => ({
+			name: award.name,
+			user: award.user,
+			createdAt: award.createdAt,
+		}));
+		const likes = awards.filter(award => award.name === AwardName.THUMBSUP);
+		const dislikes = awards.filter(
+			award => award.name === AwardName.THUMBSDOWN
+		);
 
-		return response.data;
+		return {
+			likes,
+			dislikes,
+		};
 	}
 
 	async getMergeRequestDiscussions(
@@ -103,7 +120,18 @@ export class GitlabAPI {
 		const response = await this.http.get(
 			`/projects/${projectId}/merge_requests/${mergeRequestId}/notes/`
 		);
+		const mergeRequestRaw: MergeRequestNoteRaw[] = response.data;
+		const notes: MergeRequestNote[] = mergeRequestRaw
+			.map(note => ({
+				type: note.type,
+				body: note.body,
+				system: note.system,
+				resolvable: note.resolvable,
+				resolved: note.resolved,
+				createdAt: note.created_at,
+			}))
+			.filter(note => !note.system);
 
-		return response.data;
+		return notes;
 	}
 }
