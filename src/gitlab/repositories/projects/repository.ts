@@ -1,5 +1,5 @@
 import { GitlabAPI } from '../../gitlab-api';
-import { AwardName, MergeRequestReviewAwards, Project, User } from '../types';
+import { Project, User } from '../types';
 import { IProjectRepository } from './repository-interface';
 
 export class ProjectRepository implements IProjectRepository {
@@ -39,40 +39,12 @@ export class ProjectRepository implements IProjectRepository {
 		);
 
 		for (const mrData of mergeRequestsData) {
-			const mergeRequestsAwards = await this.getMergeRequestReviewAwards(
-				projectId,
-				mrData.id
-			);
-
-			const mergeRequestNotes = await this.gitlabAPI.getMergeRequestNotes(
-				projectId,
-				mrData.id
-			);
+			const [mrNotes, mrAwards] = await Promise.all([
+				this.gitlabAPI.getMergeRequestNotes(projectId, mrData.id),
+				this.gitlabAPI.getMergeRequestAwards(projectId, mrData.id),
+			]);
 		}
 
 		return [];
-	}
-
-	async getMergeRequestReviewAwards(
-		projectId: number,
-		mergeRequestId: number
-	): Promise<MergeRequestReviewAwards> {
-		const mergeRequestAwards = await this.gitlabAPI.getMergeRequestAwards(
-			projectId,
-			mergeRequestId
-		);
-		const reviewLikes = mergeRequestAwards.filter(
-			award => award.name === AwardName.THUMBSUP
-		).length;
-		const reviewDisLikes = mergeRequestAwards.filter(
-			award => award.name === AwardName.THUMBSDOWN
-		).length;
-
-		const awards = {
-			[AwardName.THUMBSUP]: reviewLikes,
-			[AwardName.THUMBSDOWN]: reviewDisLikes,
-		};
-
-		return awards;
 	}
 }

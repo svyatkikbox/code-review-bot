@@ -1,9 +1,4 @@
-import {
-	User,
-	Project,
-	MergeRequestReviewAwards,
-	CommentEvent,
-} from '../types';
+import { User, Project, CommentEvent } from '../types';
 
 export interface IProjectRepository {
 	getProjectByName(name: string): Promise<Project | null>;
@@ -14,9 +9,4 @@ export interface IProjectRepository {
 	): Promise<User | null>;
 
 	getProjectReviewCalls(projectId: number): Promise<CommentEvent[]>;
-
-	getMergeRequestReviewAwards(
-		projectId: number,
-		mergeRequestId: number
-	): Promise<MergeRequestReviewAwards>;
 }
