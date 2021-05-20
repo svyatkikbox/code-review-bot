@@ -55,14 +55,21 @@ export type MergeRequest = {
 	webUrl: string;
 };
 
+export type MergeRequestAwardRaw = {
+	name: AwardName;
+	user: User;
+	createdAt: string;
+};
+
 export type MergeRequestAward = {
 	name: AwardName;
 	user: User;
+	createdAt: string;
 };
 
 export type MergeRequestReviewAwards = {
-	[AwardName.THUMBSUP]: number;
-	[AwardName.THUMBSDOWN]: number;
+	likes: MergeRequestAward[];
+	dislikes: MergeRequestAward[];
 };
 
 export type MergeRequestDiscussion = {
@@ -75,6 +82,15 @@ export type MergeRequestDiscussion = {
 		resolvable: boolean;
 		resolved: boolean;
 	};
+};
+
+export type MergeRequestNoteRaw = {
+	type: string | null;
+	body: string;
+	created_at: string;
+	system: boolean;
+	resolvable: boolean;
+	resolved: boolean;
 };
 
 export type MergeRequestNote = {
