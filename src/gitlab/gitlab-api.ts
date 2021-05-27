@@ -7,7 +7,9 @@ import {
 	MergeRequestDiscussion,
 	MergeRequestNote,
 	MergeRequestNoteRaw,
+	MergeRequestRaw,
 	MergeRequestReviewAwards,
+	PaginationParams,
 	Project,
 	User,
 } from './repositories/types';
@@ -38,42 +40,52 @@ export class GitlabAPI {
 		return response.data;
 	}
 
-	/**
-	 * collect data from all open project's MRs with "need review" label
-	 * @param projectId number
-	 */
-	async getProjectMergeRequestsData(
-		projectId: number
-	): Promise<MergeRequest[]> {
-		let page = 1;
+	private async paginatedSearch<T>(
+		url: string,
+		params?: PaginationParams
+	): Promise<T> {
+		const perPage = params?.perPage || 100;
+		let page = params?.page || 1;
+
+		const data = [];
 		let end = false;
 
-		const mergeRequestsRawData = [];
-
-		// TODO сделать асинхронным
 		while (end !== true) {
-			const url = `projects/${projectId}/merge_requests?state=opened&labels=need%20review&per_page=100&page=${page}`;
+			const response = await this.http.get(url, {
+				params: {
+					per_page: perPage,
+					page,
+				},
+			});
 
-			const response = await this.http.get(url);
-
-			mergeRequestsRawData.push(...response.data);
+			data.push(...response.data);
 			page++;
 
 			if (!response.data.length) {
 				end = true;
 			}
 		}
+		return data as unknown as T;
+	}
 
-		const mergeRequestsData: MergeRequest[] = mergeRequestsRawData.map(
-			mrData => ({
+	async getProjectMergeRequestsData(
+		projectId: number
+	): Promise<MergeRequest[]> {
+		const url = `projects/${projectId}/merge_requests?state=opened`;
+		const mergeRequestsRawData = await this.paginatedSearch<MergeRequestRaw[]>(
+			url
+		);
+
+		const mergeRequestsData: MergeRequest[] = mergeRequestsRawData
+			.map(mrData => ({
 				id: mrData.iid,
 				title: mrData.title,
 				upvotes: mrData.upvotes,
 				downvotes: mrData.downvotes,
 				labels: mrData.labels,
 				webUrl: mrData.web_url,
-			})
-		);
+			}))
+			.filter(d => d.id === 9630);
 
 		return mergeRequestsData;
 	}
@@ -89,7 +101,7 @@ export class GitlabAPI {
 		const awards: MergeRequestAward[] = mergeRequestAwards.map(award => ({
 			name: award.name,
 			user: award.user,
-			createdAt: award.createdAt,
+			createdAt: award.created_at,
 		}));
 		const likes = awards.filter(award => award.name === AwardName.THUMBSUP);
 		const dislikes = awards.filter(
@@ -117,11 +129,12 @@ export class GitlabAPI {
 		projectId: number,
 		mergeRequestId: number
 	): Promise<MergeRequestNote[]> {
-		const response = await this.http.get(
-			`/projects/${projectId}/merge_requests/${mergeRequestId}/notes/`
-		);
-		const mergeRequestRaw: MergeRequestNoteRaw[] = response.data;
-		const notes: MergeRequestNote[] = mergeRequestRaw
+		const url = `/projects/${projectId}/merge_requests/${mergeRequestId}/notes`;
+		const mergeRequestNoteRaw = await this.paginatedSearch<
+			MergeRequestNoteRaw[]
+		>(url);
+
+		const notes: MergeRequestNote[] = mergeRequestNoteRaw
 			.map(note => ({
 				type: note.type,
 				body: note.body,
