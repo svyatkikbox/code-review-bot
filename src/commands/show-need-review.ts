@@ -14,7 +14,7 @@ class ShowNeedReviewCommand implements IBotCommandHandler {
 	get botCommand(): BotCommand {
 		return {
 			command: 'show_need_review',
-			description: 'Показать MR-ы за последние 14 дней, куда звали на реву',
+			description: 'Показать MR-ы, куда звали на реву',
 		};
 	}
 
@@ -37,7 +37,7 @@ class ShowNeedReviewCommand implements IBotCommandHandler {
 			reviewCalls.push(...projectReviewCalls);
 		}
 
-		return ctx.replyWithMarkdownV2('*42*');
+		return ctx.replyWithMarkdownV2(`*MR-ы, куда тебя зовут*`);
 	}
 }
 
