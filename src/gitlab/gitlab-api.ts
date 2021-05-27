@@ -76,16 +76,16 @@ export class GitlabAPI {
 			url
 		);
 
-		const mergeRequestsData: MergeRequest[] = mergeRequestsRawData
-			.map(mrData => ({
+		const mergeRequestsData: MergeRequest[] = mergeRequestsRawData.map(
+			mrData => ({
 				id: mrData.iid,
 				title: mrData.title,
 				upvotes: mrData.upvotes,
 				downvotes: mrData.downvotes,
 				labels: mrData.labels,
 				webUrl: mrData.web_url,
-			}))
-			.filter(d => d.id === 9630);
+			})
+		);
 
 		return mergeRequestsData;
 	}
