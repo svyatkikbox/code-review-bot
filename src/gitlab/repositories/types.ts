@@ -46,6 +46,15 @@ export type ReviewCall = {
 	awards: MergeRequestReviewAwards;
 };
 
+export type MergeRequestRaw = {
+	iid: number;
+	title: string;
+	upvotes: number;
+	downvotes: number;
+	labels: MergeRequestLabel[];
+	web_url: string;
+};
+
 export type MergeRequest = {
 	id: number;
 	title: string;
@@ -58,7 +67,7 @@ export type MergeRequest = {
 export type MergeRequestAwardRaw = {
 	name: AwardName;
 	user: User;
-	createdAt: string;
+	created_at: string;
 };
 
 export type MergeRequestAward = {
@@ -100,4 +109,14 @@ export type MergeRequestNote = {
 	system: boolean;
 	resolvable: boolean;
 	resolved: boolean;
+};
+
+export type Mention = {
+	createdAt: string;
+	userName: string;
+};
+
+export type PaginationParams = {
+	perPage?: number;
+	page?: number;
 };
