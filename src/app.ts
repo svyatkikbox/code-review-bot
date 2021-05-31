@@ -12,6 +12,7 @@ import { ShowNeedReviewCommand } from './commands/show-need-review';
 import { RegistrationCommand } from './commands/registration';
 import { HelpCommand } from './commands/help';
 import { MenuCommand } from './commands/menu';
+import { ShowMyOpenMergeRequests } from './commands/show-my-open-merge-requests';
 
 const { BOT_TOKEN, PORT, WEBHOOK_URL } = config;
 const bot = new Telegraf<Scenes.SceneContext>(BOT_TOKEN);
@@ -29,6 +30,10 @@ const showNeedReviewCommand = new ShowNeedReviewCommand(
 	ProjectRepo,
 	SubscriptionRepo
 );
+const showMyOpenMrsCommand = new ShowMyOpenMergeRequests(
+	ProjectRepo,
+	SubscriptionRepo
+);
 const registrationCommand = new RegistrationCommand(registrationScene);
 const helpCommand = new HelpCommand();
 const menuCommand = new MenuCommand();
@@ -38,6 +43,7 @@ tg.setMyCommands([
 	menuCommand.botCommand,
 	registrationCommand.botCommand,
 	showNeedReviewCommand.botCommand,
+	showMyOpenMrsCommand.botCommand,
 ]);
 
 const stage = new Scenes.Stage<Scenes.SceneContext>([
@@ -47,6 +53,7 @@ const stage = new Scenes.Stage<Scenes.SceneContext>([
 bot.use(session());
 bot.use(stage.middleware());
 
+// TODO переделать на фабрику команд. Тут везде все одинаковое
 bot.command(helpCommand.botCommand.command, ctx => helpCommand.handler(ctx));
 bot.command(menuCommand.botCommand.command, ctx => menuCommand.handler(ctx));
 bot.command(registrationCommand.botCommand.command, ctx =>
@@ -55,6 +62,11 @@ bot.command(registrationCommand.botCommand.command, ctx =>
 bot.command(showNeedReviewCommand.botCommand.command, ctx =>
 	showNeedReviewCommand.handler(ctx)
 );
+bot.command(showMyOpenMrsCommand.botCommand.command, ctx =>
+	showMyOpenMrsCommand.handler(ctx)
+);
+// TODO связать клавиатурные кнопки с командами и обработчиками
 bot.hears('Куда позвали на ревью', ctx => showNeedReviewCommand.handler(ctx));
+bot.hears('Мои недоделанные MR-ы', ctx => showMyOpenMrsCommand.handler(ctx));
 
 export { bot, UserRepo, ProjectRepo, SubscriptionRepo };
