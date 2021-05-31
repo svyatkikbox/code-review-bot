@@ -72,7 +72,7 @@ export type MergeRequestAwardRaw = {
 
 export type MergeRequestAward = {
 	name: AwardName;
-	user: User;
+	userName: string;
 	createdAt: string;
 };
 
@@ -113,7 +113,8 @@ export type MergeRequestNote = {
 
 export type Mention = {
 	createdAt: string;
-	userName: string;
+	resolved: boolean;
+	resolvable: boolean;
 };
 
 export type PaginationParams = {
