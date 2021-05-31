@@ -90,6 +90,28 @@ export class GitlabAPI {
 		return mergeRequestsData;
 	}
 
+	async getProjectUserMergeRequests(
+		projectId: number,
+		userName: string
+	): Promise<MergeRequest[]> {
+		const url = `/projects/${projectId}/merge_requests?state=opened&author_username=${userName}`;
+		const mergeRequestsRawData = await this.paginatedSearch<MergeRequestRaw[]>(
+			url
+		);
+		const mergeRequestsData: MergeRequest[] = mergeRequestsRawData.map(
+			mrData => ({
+				id: mrData.iid,
+				title: mrData.title,
+				upvotes: mrData.upvotes,
+				downvotes: mrData.downvotes,
+				labels: mrData.labels,
+				webUrl: mrData.web_url,
+			})
+		);
+
+		return mergeRequestsData;
+	}
+
 	async getMergeRequestAwards(
 		projectId: number,
 		mergeRequestId: number
@@ -100,7 +122,7 @@ export class GitlabAPI {
 		const mergeRequestAwards: MergeRequestAwardRaw[] = response.data;
 		const awards: MergeRequestAward[] = mergeRequestAwards.map(award => ({
 			name: award.name,
-			user: award.user,
+			userName: award.user.username,
 			createdAt: award.created_at,
 		}));
 		const likes = awards.filter(award => award.name === AwardName.THUMBSUP);
