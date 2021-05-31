@@ -96,7 +96,8 @@ export class ProjectRepository implements IProjectRepository {
 			const lastUserEstimate = [userLike, userDislike]
 				.map(estimate => estimate?.createdAt)
 				.filter(estimate => !!estimate)
-				.map(createdAt => new Date(createdAt as string));
+				.map(createdAt => new Date(createdAt as string))
+				.sort(compareAsc).length;
 		}
 
 		return [];
