@@ -20,7 +20,10 @@ class MenuCommand implements IBotCommandHandler {
 		const showNeedReviewsBtn: KeyboardButton = {
 			text: 'Куда позвали на ревью',
 		};
-		const keyboard = [showNeedReviewsBtn];
+		const showMyOpenMrsCommandBtn: KeyboardButton = {
+			text: 'Мои недоделанные MR-ы',
+		};
+		const keyboard = [showNeedReviewsBtn, showMyOpenMrsCommandBtn];
 
 		return ctx.telegram.sendMessage(ctx.message.chat.id, 'Menu', {
 			reply_markup: { keyboard: [keyboard], resize_keyboard: true },
