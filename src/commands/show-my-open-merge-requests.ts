@@ -42,7 +42,7 @@ class ShowMyOpenMergeRequests implements IBotCommandHandler {
 		console.log(myOpenMrs);
 		console.log(myOpenMrs.length);
 
-		if (!myOpenMrs.length) {
+		if (myOpenMrs.length) {
 			let markup = '<b>Твои недоделанные MR-ы</b>\n';
 
 			for (const mrData of myOpenMrs) {
