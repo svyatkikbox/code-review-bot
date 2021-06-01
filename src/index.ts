@@ -1,6 +1,13 @@
 import { bot } from './app';
+import config from './config';
+const { PORT, WEBHOOK_URL } = config;
 
-bot.launch();
+bot.launch({
+	webhook: {
+		hookPath: WEBHOOK_URL,
+		port: PORT,
+	},
+});
 
 process.once('SIGINT', () => bot.stop('SIGINT'));
 
