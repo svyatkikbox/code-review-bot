@@ -7,5 +7,5 @@ export default Object.freeze({
 	GITLAB_TOKEN: process.env.GITLAB_TOKEN as string,
 
 	WEBHOOK_URL: process.env.WEBHOOK_URL as string,
-	PORT: process.env.PORT || 5000,
+	PORT: parseInt(process.env.PORT as string, 10),
 });
