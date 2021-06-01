@@ -37,7 +37,7 @@ class ShowNeedReviewCommand implements IBotCommandHandler {
 			reviewCalls.push(...projectReviewCalls);
 		}
 
-		return ctx.replyWithMarkdownV2(`*MRы, куда тебя зовут*`);
+		return ctx.replyWithMarkdownV2(`*MR-ы, куда тебя зовут*`);
 	}
 }
 

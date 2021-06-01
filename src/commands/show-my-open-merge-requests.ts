@@ -43,7 +43,7 @@ class ShowMyOpenMergeRequests implements IBotCommandHandler {
 		console.log(myOpenMrs.length);
 
 		if (!myOpenMrs.length) {
-			let markup = '<b>Your open MRs</b>\n';
+			let markup = '<b>Твои недоделанные MR-ы</b>\n';
 
 			for (const mrData of myOpenMrs) {
 				const { webUrl, title, upvotes, downvotes } = mrData;
