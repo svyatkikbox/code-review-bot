@@ -1,3 +1,4 @@
+import { dictionary } from '../dictionary';
 import { NarrowedContext, Scenes } from 'telegraf';
 import { BotCommand, Update } from 'telegraf/typings/core/types/typegram';
 import { IProjectRepository } from '../gitlab/repositories/projects/repository-interface';
@@ -41,12 +42,16 @@ class ShowMyOpenMergeRequests implements IBotCommandHandler {
 		console.log(myOpenMrs);
 		console.log(myOpenMrs.length);
 
-		if (myOpenMrs.length) {
-			return ctx.replyWithMarkdownV2(`*Your open MRs*`);
+		if (!myOpenMrs.length) {
+			let markup = '<b>Your open MRs</b>\n';
+
+			for (const mrData of myOpenMrs) {
+				const { webUrl, title, upvotes, downvotes } = mrData;
+				markup += `<a href="${webUrl}">${title}</a> 👍 ${upvotes} 👎 ${downvotes}\n`;
+			}
+			return ctx.replyWithHTML(markup, { disable_web_page_preview: true });
 		} else {
-			return ctx.replyWithMarkdownV2(
-				`*Ты либо красава и все порешал, либо нихуя не делал*`
-			);
+			return ctx.replyWithMarkdownV2(dictionary.commands.emptyMrs);
 		}
 	}
 }

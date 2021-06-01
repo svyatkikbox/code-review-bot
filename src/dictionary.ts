@@ -6,4 +6,7 @@ export const dictionary = {
 		userWasFound: 'User was found',
 		userNotExists: '💀 User does not exist',
 	},
+	commands: {
+		emptyMrs: '*Либо красава, либо нихуя не делал 🌚*',
+	},
 };
