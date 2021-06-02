@@ -18,7 +18,7 @@ const { BOT_TOKEN, PORT, WEBHOOK_URL } = config;
 const bot = new Telegraf<Scenes.SceneContext>(BOT_TOKEN);
 const tg = new Telegram(BOT_TOKEN);
 
-bot.telegram.setWebhook(`${WEBHOOK_URL}/bot${BOT_TOKEN}:${PORT}`);
+// bot.telegram.setWebhook(`${WEBHOOK_URL}/bot${BOT_TOKEN}:${PORT}`);
 
 const gitlabAPI = new GitlabAPI(httpService);
 

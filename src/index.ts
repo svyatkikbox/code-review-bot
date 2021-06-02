@@ -1,11 +1,10 @@
 import { bot } from './app';
 import config from './config';
-const { PORT, APP_URL } = config;
+const { PORT, WEBHOOK_URL } = config;
 
 bot.launch({
 	webhook: {
-		host: '0.0.0.0',
-		domain: APP_URL,
+		domain: WEBHOOK_URL,
 		port: PORT,
 	},
 });
