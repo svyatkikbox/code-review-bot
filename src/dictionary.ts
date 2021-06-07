@@ -6,9 +6,13 @@ export const dictionary = {
 		userWasFound: 'User was found',
 		userNotExists: '💀 User does not exist',
 	},
+	buttons: {
+		showNeedReviews: 'Куда позвали на ревью',
+		showMyOpenMrsCommand: 'Мои недоделанные MR-ы',
+	},
 	commands: {
 		yourMrs: 'Твои недоделанные MR-ы',
-		emptyMrs: '*Либо красава, либо нихуя не делал 🌚*',
+		emptyMrs: 'Либо красава, либо нихуя не делал 🌚',
 		whereYouWereMentioned: 'MR-ы, куда тебя зовут',
 	},
 };

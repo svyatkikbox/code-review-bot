@@ -52,7 +52,7 @@ class ShowMyOpenMergeRequests implements IBotCommandHandler {
 			}
 			return ctx.replyWithHTML(markup, { disable_web_page_preview: true });
 		} else {
-			return ctx.replyWithMarkdownV2(dictionary.commands.emptyMrs);
+			return ctx.replyWithMarkdownV2(`*${dictionary.commands.emptyMrs}`);
 		}
 	}
 }

@@ -1,6 +1,7 @@
 import { NarrowedContext, Scenes } from 'telegraf';
-import { KeyboardButton } from 'telegraf/typings/core/types/typegram';
 import { BotCommand, Update } from 'typegram';
+
+import { menuKeyboard } from '../keyboards/bot-menu';
 import { IBotCommandHandler } from './bot-command-handler-interface';
 
 class MenuCommand implements IBotCommandHandler {
@@ -17,16 +18,8 @@ class MenuCommand implements IBotCommandHandler {
 			Update.MessageUpdate
 		>
 	) {
-		const showNeedReviewsBtn: KeyboardButton = {
-			text: 'Куда позвали на ревью',
-		};
-		const showMyOpenMrsCommandBtn: KeyboardButton = {
-			text: 'Мои недоделанные MR-ы',
-		};
-		const keyboard = [showNeedReviewsBtn, showMyOpenMrsCommandBtn];
-
 		return ctx.telegram.sendMessage(ctx.message.chat.id, 'Menu', {
-			reply_markup: { keyboard: [keyboard], resize_keyboard: true },
+			reply_markup: { keyboard: [menuKeyboard], resize_keyboard: true },
 		});
 	}
 }

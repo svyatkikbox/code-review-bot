@@ -11,6 +11,7 @@ import { RegistrationCommand } from './commands/registration';
 import { HelpCommand } from './commands/help';
 import { MenuCommand } from './commands/menu';
 import { ShowMyOpenMergeRequests } from './commands/show-my-open-merge-requests';
+import { dictionary } from './dictionary';
 
 const { BOT_TOKEN } = config;
 const bot = new Telegraf<Scenes.SceneContext>(BOT_TOKEN);
@@ -49,7 +50,6 @@ const stage = new Scenes.Stage<Scenes.SceneContext>([
 bot.use(session());
 bot.use(stage.middleware());
 
-// TODO переделать на фабрику команд. Тут везде все одинаковое
 bot.command(helpCommand.botCommand.command, ctx => helpCommand.handler(ctx));
 bot.command(menuCommand.botCommand.command, ctx => menuCommand.handler(ctx));
 bot.command(registrationCommand.botCommand.command, ctx =>
@@ -61,11 +61,11 @@ bot.command(showNeedReviewCommand.botCommand.command, ctx =>
 bot.command(showMyOpenMrsCommand.botCommand.command, ctx =>
 	showMyOpenMrsCommand.handler(ctx)
 );
-// TODO связать клавиатурные кнопки с командами и обработчиками
-bot.hears(showNeedReviewCommand.botCommand.command, ctx =>
+
+bot.hears(dictionary.buttons.showNeedReviews, ctx =>
 	showNeedReviewCommand.handler(ctx)
 );
-bot.hears(showMyOpenMrsCommand.botCommand.command, ctx =>
+bot.hears(dictionary.buttons.showMyOpenMrsCommand, ctx =>
 	showMyOpenMrsCommand.handler(ctx)
 );
 
