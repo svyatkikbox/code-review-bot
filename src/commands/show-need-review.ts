@@ -1,5 +1,7 @@
 import { NarrowedContext, Scenes } from 'telegraf';
 import { BotCommand, Update } from 'telegraf/typings/core/types/typegram';
+
+import { dictionary } from '../dictionary';
 import { IProjectRepository } from '../gitlab/repositories/projects/repository-interface';
 import { CommentEvent } from '../gitlab/repositories/types';
 import { ISubscriptionRepository } from '../subscription/repository-interface';
@@ -37,7 +39,9 @@ class ShowNeedReviewCommand implements IBotCommandHandler {
 			reviewCalls.push(...projectReviewCalls);
 		}
 
-		return ctx.replyWithMarkdownV2(`*MR-ы, куда тебя зовут*`);
+		return ctx.replyWithMarkdownV2(
+			`*${dictionary.commands.whereYouWereMentioned}*`
+		);
 	}
 }
 
