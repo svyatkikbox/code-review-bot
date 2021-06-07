@@ -1,6 +1,7 @@
-import { dictionary } from '../dictionary';
 import { NarrowedContext, Scenes } from 'telegraf';
 import { BotCommand, Update } from 'telegraf/typings/core/types/typegram';
+
+import { dictionary } from '../dictionary';
 import { IProjectRepository } from '../gitlab/repositories/projects/repository-interface';
 import { MergeRequest } from '../gitlab/repositories/types';
 import { ISubscriptionRepository } from '../subscription/repository-interface';
@@ -43,7 +44,7 @@ class ShowMyOpenMergeRequests implements IBotCommandHandler {
 		console.log(myOpenMrs.length);
 
 		if (myOpenMrs.length) {
-			let markup = '<b>Твои недоделанные MR-ы</b>\n';
+			let markup = `<b>${dictionary.commands.yourMrs}</b>\n`;
 
 			for (const mrData of myOpenMrs) {
 				const { webUrl, title, upvotes, downvotes } = mrData;
