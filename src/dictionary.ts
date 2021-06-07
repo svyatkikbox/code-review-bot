@@ -7,6 +7,8 @@ export const dictionary = {
 		userNotExists: '💀 User does not exist',
 	},
 	commands: {
+		yourMrs: 'Твои недоделанные MR-ы',
 		emptyMrs: '*Либо красава, либо нихуя не делал 🌚*',
+		whereYouWereMentioned: 'MR-ы, куда тебя зовут',
 	},
 };
