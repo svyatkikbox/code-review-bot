@@ -59,11 +59,12 @@ export class ProjectRepository implements IProjectRepository {
 		return userMentions;
 	}
 
-	async getProjectReviewCalls(projectId: number): Promise<[]> {
+	async getProjectReviewCalls(projectId: number): Promise<any[]> {
 		const mergeRequestsData = await this.gitlabAPI.getProjectMergeRequestsData(
 			projectId
 		);
 
+		const mrs: Mention[] = [];
 		for (const mrData of mergeRequestsData) {
 			const [mrNotes, mrAwards] = await Promise.all([
 				this.gitlabAPI.getMergeRequestNotes(projectId, mrData.id),
@@ -97,10 +98,18 @@ export class ProjectRepository implements IProjectRepository {
 				.map(estimate => estimate?.createdAt)
 				.filter(estimate => !!estimate)
 				.map(createdAt => new Date(createdAt as string))
-				.sort(compareAsc).length;
+				.sort(compareAsc);
+
+			const lastNotResolvableNoteMention = notResolvableNotes
+				.map(mention => new Date(mention.createdAt))
+				.sort(compareAsc);
+
+			if (!lastUserEstimate.length && notResolvableNotes.length) {
+				mrs.push(notResolvableNotes[0]);
+			}
 		}
 
-		return [];
+		return mrs;
 	}
 
 	async getProjectUserMergeRequests(
