@@ -40,9 +40,6 @@ class ShowMyOpenMergeRequests implements IBotCommandHandler {
 			myOpenMrs.push(...myProjectMrs);
 		}
 
-		console.log(myOpenMrs);
-		console.log(myOpenMrs.length);
-
 		if (myOpenMrs.length) {
 			let markup = `<b>${dictionary.commands.yourMrs}</b>\n`;
 
