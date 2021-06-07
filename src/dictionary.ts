@@ -8,11 +8,11 @@ export const dictionary = {
 	},
 	buttons: {
 		showNeedReviews: 'Куда позвали на ревью',
-		showMyOpenMrsCommand: 'Мои недоделанные MR-ы',
+		showMyOpenMrsCommand: 'Мои недоделанные MRы',
 	},
 	commands: {
-		yourMrs: 'Твои недоделанные MR-ы',
+		yourMrs: 'Твои недоделанные MRы',
 		emptyMrs: 'Либо красава, либо нихуя не делал 🌚',
-		whereYouWereMentioned: 'MR-ы, куда тебя зовут',
+		whereYouWereMentioned: 'MRы, куда тебя зовут',
 	},
 };
