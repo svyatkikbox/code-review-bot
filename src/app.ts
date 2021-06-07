@@ -1,5 +1,3 @@
-// composition root
-// TODO еще шушуть и захошица прикручивать di container
 import { Scenes, session, Telegraf, Telegram } from 'telegraf';
 import config from './config';
 import { GitlabAPI } from './gitlab/gitlab-api';
@@ -64,7 +62,11 @@ bot.command(showMyOpenMrsCommand.botCommand.command, ctx =>
 	showMyOpenMrsCommand.handler(ctx)
 );
 // TODO связать клавиатурные кнопки с командами и обработчиками
-bot.hears('Куда позвали на ревью', ctx => showNeedReviewCommand.handler(ctx));
-bot.hears('Мои недоделанные MR-ы', ctx => showMyOpenMrsCommand.handler(ctx));
+bot.hears(showNeedReviewCommand.botCommand.command, ctx =>
+	showNeedReviewCommand.handler(ctx)
+);
+bot.hears(showMyOpenMrsCommand.botCommand.command, ctx =>
+	showMyOpenMrsCommand.handler(ctx)
+);
 
 export { bot, UserRepo, ProjectRepo, SubscriptionRepo };
