@@ -20,6 +20,17 @@ class ShowMyOpenMergeRequests implements IBotCommandHandler {
 		};
 	}
 
+	renderMarkupForReply(myOpenMrs: MergeRequest[]): string {
+		let markup = `<b>${dictionary.commands.yourMrs}</b>\n`;
+
+		for (const mrData of myOpenMrs) {
+			const { webUrl, title, upvotes, downvotes } = mrData;
+			markup += `<a href="${webUrl}">${title}</a> 👍 ${upvotes} 👎 ${downvotes}\n`;
+		}
+
+		return markup;
+	}
+
 	async handler(
 		ctx: NarrowedContext<
 			Scenes.SceneContext<Scenes.SceneSessionData>,
@@ -41,12 +52,7 @@ class ShowMyOpenMergeRequests implements IBotCommandHandler {
 		}
 
 		if (myOpenMrs.length) {
-			let markup = `<b>${dictionary.commands.yourMrs}</b>\n`;
-
-			for (const mrData of myOpenMrs) {
-				const { webUrl, title, upvotes, downvotes } = mrData;
-				markup += `<a href="${webUrl}">${title}</a> 👍 ${upvotes} 👎 ${downvotes}\n`;
-			}
+			const markup = this.renderMarkupForReply(myOpenMrs);
 			return ctx.replyWithHTML(markup, { disable_web_page_preview: true });
 		} else {
 			return ctx.replyWithMarkdownV2(`*${dictionary.commands.emptyMrs}`);
