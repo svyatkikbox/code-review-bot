@@ -62,6 +62,20 @@ export class ProjectRepository implements IProjectRepository {
 		return userMentions;
 	}
 
+	private extractUnresolvedMentions(userMentions: Mention[]): Mention[] {
+		const unResolvedMentions = userMentions.filter(
+			mention => mention.resolvable && !mention.resolved
+		);
+		return unResolvedMentions;
+	}
+
+	private extractUnresolvableMentions(userMentions: Mention[]): Mention[] {
+		const unResolvableMentions = userMentions.filter(
+			mention => !mention.resolvable
+		);
+		return unResolvableMentions;
+	}
+
 	getLastUserEstimateDate(
 		userName: string,
 		mergeRequestAwards: MergeRequestReviewAwards
@@ -98,12 +112,8 @@ export class ProjectRepository implements IProjectRepository {
 	): boolean {
 		let shoulBeCalled = false;
 
-		const unResolvedMentions = userMentions.filter(
-			mention => mention.resolvable && !mention.resolved
-		);
-		const unResolvableMentions = userMentions.filter(
-			mention => !mention.resolvable
-		);
+		const unResolvedMentions = this.extractUnresolvedMentions(userMentions);
+		const unResolvableMentions = this.extractUnresolvableMentions(userMentions);
 		const lastUserEstimateDate = this.getLastUserEstimateDate(
 			userName,
 			mergeRequestAwards
