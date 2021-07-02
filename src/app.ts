@@ -1,17 +1,18 @@
 import { Scenes, session, Telegraf, Telegram } from 'telegraf';
+import { HelpCommand } from './commands/help';
+import { MenuCommand } from './commands/menu';
+import { RegistrationCommand } from './commands/registration';
+import { ShowMyOpenMergeRequests } from './commands/show-my-open-merge-requests';
+import { ShowNeedReviewCommand } from './commands/show-need-review';
 import config from './config';
+import { SqlDatabase } from './database';
+import { dictionary } from './dictionary';
 import { GitlabAPI } from './gitlab/gitlab-api';
 import { httpService } from './gitlab/http-service';
 import { ProjectRepository } from './gitlab/repositories/projects/repository';
 import { UserRepository } from './gitlab/repositories/users/repository';
-import { SubscriptionRepository } from './subscription/repository';
 import { registrationScene } from './scenes/registration/registration-scene';
-import { ShowNeedReviewCommand } from './commands/show-need-review';
-import { RegistrationCommand } from './commands/registration';
-import { HelpCommand } from './commands/help';
-import { MenuCommand } from './commands/menu';
-import { ShowMyOpenMergeRequests } from './commands/show-my-open-merge-requests';
-import { dictionary } from './dictionary';
+import { SqlSubscriptionRepository } from './subscription/repository';
 
 const { BOT_TOKEN } = config;
 const bot = new Telegraf<Scenes.SceneContext>(BOT_TOKEN);
@@ -21,15 +22,15 @@ const gitlabAPI = new GitlabAPI(httpService);
 
 const UserRepo = new UserRepository(gitlabAPI);
 const ProjectRepo = new ProjectRepository(gitlabAPI);
-const SubscriptionRepo = new SubscriptionRepository();
+const SqlSubscriptionRepo = new SqlSubscriptionRepository(SqlDatabase);
 
 const showNeedReviewCommand = new ShowNeedReviewCommand(
 	ProjectRepo,
-	SubscriptionRepo
+	SqlSubscriptionRepo
 );
 const showMyOpenMrsCommand = new ShowMyOpenMergeRequests(
 	ProjectRepo,
-	SubscriptionRepo
+	SqlSubscriptionRepo
 );
 const registrationCommand = new RegistrationCommand(registrationScene);
 const helpCommand = new HelpCommand();
@@ -69,4 +70,4 @@ bot.hears(dictionary.buttons.showMyOpenMrsCommand, ctx =>
 	showMyOpenMrsCommand.handler(ctx)
 );
 
-export { bot, UserRepo, ProjectRepo, SubscriptionRepo };
+export { bot, UserRepo, ProjectRepo, SqlSubscriptionRepo };

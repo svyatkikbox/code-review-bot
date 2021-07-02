@@ -6,6 +6,8 @@ export default Object.freeze({
 	GITLAB_URL: process.env.GITLAB_URL as string,
 	GITLAB_TOKEN: process.env.GITLAB_TOKEN as string,
 
+	DATABASE_URL: process.env.DATABASE_URL as string,
+
 	WEBHOOK_URL: process.env.WEBHOOK_URL as string,
 	PORT: parseInt(process.env.PORT as string, 10),
 });
