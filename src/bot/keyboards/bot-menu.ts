@@ -1,6 +1,6 @@
 import { KeyboardButton } from 'telegraf/typings/core/types/typegram';
 
-import { dictionary } from '../dictionary';
+import { dictionary } from '../../dictionary';
 
 const showNeedReviewsBtn: KeyboardButton = {
 	text: dictionary.buttons.showNeedReviews,

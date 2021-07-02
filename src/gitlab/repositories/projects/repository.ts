@@ -1,5 +1,4 @@
-import compareDesc from 'date-fns/compareDesc';
-import isAfter from 'date-fns/isAfter';
+import { compareDesc, isAfter } from 'date-fns';
 
 import { GitlabAPI } from '../../gitlab-api';
 import {

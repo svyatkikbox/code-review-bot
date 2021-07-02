@@ -1,18 +1,18 @@
 import { Scenes, session, Telegraf, Telegram } from 'telegraf';
-import { HelpCommand } from './commands/help';
-import { MenuCommand } from './commands/menu';
-import { RegistrationCommand } from './commands/registration';
-import { ShowMyOpenMergeRequests } from './commands/show-my-open-merge-requests';
-import { ShowNeedReviewCommand } from './commands/show-need-review';
+import { HelpCommand } from './bot/commands/help';
+import { MenuCommand } from './bot/commands/menu';
+import { RegistrationCommand } from './bot/commands/registration';
+import { ShowMyOpenMergeRequests } from './bot/commands/show-my-open-merge-requests';
+import { ShowNeedReviewCommand } from './bot/commands/show-need-review';
 import config from './config';
-import { SqlDatabase } from './database';
+import { SqlDatabase } from './bot/database';
 import { dictionary } from './dictionary';
 import { GitlabAPI } from './gitlab/gitlab-api';
 import { httpService } from './gitlab/http-service';
 import { ProjectRepository } from './gitlab/repositories/projects/repository';
 import { UserRepository } from './gitlab/repositories/users/repository';
-import { registrationScene } from './scenes/registration/registration-scene';
-import { SqlSubscriptionRepository } from './subscription/repository';
+import { registrationScene } from './bot/scenes/registration/registration-scene';
+import { SqlSubscriptionRepository } from './bot/subscription/repository';
 
 const { BOT_TOKEN } = config;
 const bot = new Telegraf<Scenes.SceneContext>(BOT_TOKEN);

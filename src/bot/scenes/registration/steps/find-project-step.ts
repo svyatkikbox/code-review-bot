@@ -1,6 +1,6 @@
 import { Scenes } from 'telegraf';
 
-import { ProjectRepo } from '../../../app';
+import { ProjectRepo } from '../../../../app';
 
 const stepId = 'FindProjects';
 const findProjects = new Scenes.BaseScene<Scenes.SceneContext>(stepId);
