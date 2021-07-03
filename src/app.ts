@@ -5,7 +5,7 @@ import { RegistrationCommand } from './bot/commands/registration';
 import { ShowMyOpenMergeRequests } from './bot/commands/show-my-open-merge-requests';
 import { ShowNeedReviewCommand } from './bot/commands/show-need-review';
 import config from './config';
-import { SqlDatabase } from './bot/database';
+import { SqlDatabase } from './bot/database/database';
 import { dictionary } from './dictionary';
 import { GitlabAPI } from './gitlab/gitlab-api';
 import { httpService } from './gitlab/http-service';
@@ -13,6 +13,7 @@ import { ProjectRepository } from './gitlab/repositories/projects/repository';
 import { UserRepository } from './gitlab/repositories/users/repository';
 import { registrationScene } from './bot/scenes/registration/registration-scene';
 import { SqlSubscriptionRepository } from './bot/subscription/repository';
+import { Connection } from './bot/database/connection';
 
 const { BOT_TOKEN } = config;
 const bot = new Telegraf<Scenes.SceneContext>(BOT_TOKEN);
@@ -22,7 +23,11 @@ const gitlabAPI = new GitlabAPI(httpService);
 
 const UserRepo = new UserRepository(gitlabAPI);
 const ProjectRepo = new ProjectRepository(gitlabAPI);
-const SqlSubscriptionRepo = new SqlSubscriptionRepository(SqlDatabase);
+
+const dbConnection = new Connection(config.DATABASE_URL);
+const database = new SqlDatabase(dbConnection);
+
+const SqlSubscriptionRepo = new SqlSubscriptionRepository(database);
 
 const showNeedReviewCommand = new ShowNeedReviewCommand(
 	ProjectRepo,

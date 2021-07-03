@@ -1,4 +1,4 @@
-import { ISqlDatabase } from '../database';
+import { ISqlDatabase } from '../database/database-interface';
 import { ISubscriptionRepository } from './repository-interface';
 import { Subscription } from './types';
 
