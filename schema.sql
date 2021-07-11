@@ -1,14 +1,14 @@
 CREATE TABLE IF NOT EXISTS Users
 (
 	id SERIAL PRIMARY KEY,
-	TgUsername VARCHAR(255) NOT NULL,
-	GitlabUsername VARCHAR(255) NOT NULL,
-	ChatId integer NOT NULL UNIQUE
+	tg_username VARCHAR(255) NOT NULL,
+	gitlab_username VARCHAR(255) NOT NULL,
+	chat_id integer NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS Subscription
 (
 	id SERIAL PRIMARY KEY,
-	UserId integer NOT NULL,
-	ProjectIds integer[] NOT NULL
+	user_id integer NOT NULL,
+	projects integer[] NOT NULL
 );

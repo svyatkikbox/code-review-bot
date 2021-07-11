@@ -13,7 +13,6 @@ import { ProjectRepository } from './gitlab/repositories/projects/repository';
 import { UserRepository } from './gitlab/repositories/users/repository';
 import { registrationScene } from './bot/scenes/registration/registration-scene';
 import { SqlSubscriptionRepository } from './bot/subscription/repository';
-import { Connection } from './bot/database/connection';
 
 const { BOT_TOKEN } = config;
 const bot = new Telegraf<Scenes.SceneContext>(BOT_TOKEN);
@@ -24,8 +23,7 @@ const gitlabAPI = new GitlabAPI(httpService);
 const UserRepo = new UserRepository(gitlabAPI);
 const ProjectRepo = new ProjectRepository(gitlabAPI);
 
-const dbConnection = new Connection(config.DATABASE_URL);
-const database = new SqlDatabase(dbConnection);
+const database = new SqlDatabase(config.DATABASE_URL);
 
 const SqlSubscriptionRepo = new SqlSubscriptionRepository(database);
 

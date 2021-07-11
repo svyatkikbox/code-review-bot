@@ -1,11 +1,17 @@
-import { Connection } from './connection';
-import { ISqlDatabase } from './database-interface';
+import { Pool } from 'pg';
 
-class SqlDatabase implements ISqlDatabase {
-	constructor(private readonly connection: Connection) {}
+class SqlDatabase {
+	private connectionPool;
+
+	constructor(connectionUrl: string) {
+		if (!connectionUrl) {
+			throw Error('Connection string is empty');
+		}
+		this.connectionPool = new Pool({ connectionString: connectionUrl });
+	}
 
 	async query(queryString: string, params: any[]) {
-		return this.connection.getConnectionPool().query(queryString, params);
+		return this.connectionPool.query(queryString, params);
 	}
 }
 

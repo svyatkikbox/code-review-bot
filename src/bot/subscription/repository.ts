@@ -1,4 +1,4 @@
-import { ISqlDatabase } from '../database/database-interface';
+import { SqlDatabase } from '../database/database';
 import { ISubscriptionRepository } from './repository-interface';
 import { Subscription } from './types';
 
@@ -6,7 +6,7 @@ import { Subscription } from './types';
 const PROJECTS = [{ name: 'uKit', id: 1 }];
 
 class SqlSubscriptionRepository implements ISubscriptionRepository {
-	constructor(db: ISqlDatabase) {}
+	constructor(private readonly db: SqlDatabase) {}
 
 	async createSubscription() {}
 
