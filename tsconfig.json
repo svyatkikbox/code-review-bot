@@ -9,6 +9,5 @@
 		"strict": true,
 		"target": "es2019"
 	},
-	"esModuleInterop": true,
 	"exclude": ["node_modules", "src/test", "dist"]
 }
