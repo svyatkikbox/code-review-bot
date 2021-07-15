@@ -38,8 +38,6 @@ class ShowNeedReviewCommand implements IBotCommandHandler {
 			reviewCalls.push(...projectReviewCalls);
 		}
 
-		if (reviewCalls.length) console.log(reviewCalls);
-
 		return ctx.replyWithMarkdownV2(
 			`*${dictionary.commands.whereYouWereMentioned}*`
 		);
