@@ -5,13 +5,8 @@ export interface IProjectRepository {
 
 	getProjectUserByUsername(
 		projectId: number,
-		username: string
+		userName: string
 	): Promise<User | null>;
 
 	getProjectReviewCalls(projectId: number): Promise<CommentEvent[]>;
-
-	getProjectUserMergeRequests(
-		projectId: number,
-		userName: string
-	): Promise<MergeRequest[]>;
 }

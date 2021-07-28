@@ -9,11 +9,11 @@ const findUser = new Scenes.BaseScene<Scenes.SceneContext>(stepId);
 findUser.enter(ctx => ctx.reply(dictionary.steps.enterUserName));
 findUser.command('exit', ctx => ctx.scene.leave());
 findUser.on('text', async ctx => {
-	const username = ctx.message.text;
+	const userName = ctx.message.text;
 	let user = null;
 
 	try {
-		user = await UserRepo.getUserByUsername(username);
+		user = await UserRepo.getByUsername(userName);
 	} catch (error) {
 		console.error(error);
 		return ctx.reply(dictionary.smthWentWrong);

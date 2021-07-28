@@ -4,15 +4,17 @@ import { MenuCommand } from './bot/commands/menu';
 import { RegistrationCommand } from './bot/commands/registration';
 import { ShowMyOpenMergeRequests } from './bot/commands/show-my-open-merge-requests';
 import { ShowNeedReviewCommand } from './bot/commands/show-need-review';
-import config from './config';
 import { SqlDatabase } from './bot/database/database';
+import { registrationScene } from './bot/scenes/registration/registration-scene';
+import { SqlSubscriptionRepository } from './bot/subscription/repository';
+import config from './config';
 import { dictionary } from './dictionary';
 import { GitlabAPI } from './gitlab/gitlab-api';
 import { httpService } from './gitlab/http-service';
+import { MergeRequestRepository } from './gitlab/merge-requests/repository';
 import { ProjectRepository } from './gitlab/projects/repository';
 import { UserRepository } from './gitlab/users/repository';
-import { registrationScene } from './bot/scenes/registration/registration-scene';
-import { SqlSubscriptionRepository } from './bot/subscription/repository';
+import { MergeRequestMap } from './mappers/merge-request-map';
 
 const { BOT_TOKEN } = config;
 const bot = new Telegraf<Scenes.SceneContext>(BOT_TOKEN);
@@ -22,6 +24,10 @@ const gitlabAPI = new GitlabAPI(httpService);
 
 const UserRepo = new UserRepository(gitlabAPI);
 const ProjectRepo = new ProjectRepository(gitlabAPI);
+const MergeRequestRepo = new MergeRequestRepository(
+	gitlabAPI,
+	new MergeRequestMap()
+);
 
 const database = new SqlDatabase(config.DATABASE_URL);
 
@@ -32,7 +38,7 @@ const showNeedReviewCommand = new ShowNeedReviewCommand(
 	SqlSubscriptionRepo
 );
 const showMyOpenMrsCommand = new ShowMyOpenMergeRequests(
-	ProjectRepo,
+	MergeRequestRepo,
 	SqlSubscriptionRepo
 );
 const registrationCommand = new RegistrationCommand(registrationScene);

@@ -5,9 +5,10 @@ import { IUserRepository } from './repository-interface';
 export class UserRepository implements IUserRepository {
 	constructor(private readonly gitlabAPI: GitlabAPI) {}
 
-	async getUserByUsername(username: string): Promise<User | null> {
-		const usersData: User[] = await this.gitlabAPI.getUserByUsername(username);
-		const user = usersData.find(u => u.username === username);
+	async getByUsername(userName: string): Promise<User | null> {
+		const usersData = await this.gitlabAPI.getUserByUsername(userName);
+
+		const user = usersData.find(u => u.userName === userName);
 
 		if (!user) {
 			return null;

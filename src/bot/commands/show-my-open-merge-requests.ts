@@ -1,3 +1,4 @@
+import { IMergeRequestRepository } from 'src/gitlab/merge-requests/repository-interface';
 import { NarrowedContext, Scenes } from 'telegraf';
 import { BotCommand, Update } from 'telegraf/typings/core/types/typegram';
 
@@ -9,7 +10,7 @@ import { IBotCommandHandler } from './bot-command-handler-interface';
 
 class ShowMyOpenMergeRequests implements IBotCommandHandler {
 	constructor(
-		private readonly ProjectRepo: IProjectRepository,
+		private readonly MergeRequestRepo: IMergeRequestRepository,
 		private readonly SubscriptionRepo: ISubscriptionRepository
 	) {}
 
@@ -43,10 +44,8 @@ class ShowMyOpenMergeRequests implements IBotCommandHandler {
 		const myOpenMrs: MergeRequest[] = [];
 
 		for (const { id } of projects) {
-			const myProjectMrs = await this.ProjectRepo.getProjectUserMergeRequests(
-				id,
-				'svyat'
-			);
+			const myProjectMrs =
+				await this.MergeRequestRepo.getProjectUserMergeRequests(id, 'svyat');
 
 			myOpenMrs.push(...myProjectMrs);
 		}

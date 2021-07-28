@@ -27,13 +27,13 @@ export class ProjectRepository implements IProjectRepository {
 
 	async getProjectUserByUsername(
 		projectId: number,
-		username: string
+		userName: string
 	): Promise<User | null> {
 		const usersData = await this.gitlabAPI.getProjectUserByUsername(
 			projectId,
-			username
+			userName
 		);
-		const user = usersData.find(u => u.username === username);
+		const user = usersData.find(u => u.userName === userName);
 
 		if (!user) {
 			return null;
@@ -165,17 +165,5 @@ export class ProjectRepository implements IProjectRepository {
 		}
 
 		return mrs;
-	}
-
-	async getProjectUserMergeRequests(
-		projectId: number,
-		userName: string
-	): Promise<MergeRequest[]> {
-		const userMrs = this.gitlabAPI.getProjectUserMergeRequests(
-			projectId,
-			userName
-		);
-
-		return userMrs;
 	}
 }

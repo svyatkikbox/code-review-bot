@@ -21,11 +21,13 @@ export type Project = {
 	name: string;
 };
 
-export type User = {
+export type UserRaw = {
 	id: number;
 	username: string;
 	state: UserState;
 };
+
+export type User = Omit<UserRaw, 'username'> & { userName: string };
 
 type Note = {
 	body: string;
