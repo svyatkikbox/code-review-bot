@@ -13,7 +13,7 @@ findProjects.on('text', async ctx => {
 	let projectData = null;
 
 	try {
-		projectData = await ProjectRepo.getProjectByName(projectName);
+		projectData = await ProjectRepo.getByName(projectName);
 		console.log(projectData);
 	} catch (error) {
 		return ctx.reply('Cannot find project');

@@ -10,29 +10,10 @@ import {
 	MergeRequestRaw,
 	MergeRequestReviewAwards,
 	PaginationParams,
-	Project,
-	User,
 } from './types';
 
 export class GitlabAPI {
 	constructor(private readonly http: AxiosInstance) {}
-
-	async getProjectByName(name: string): Promise<Project[]> {
-		const response = await this.http.get(`projects?search=${name}`);
-
-		return response.data;
-	}
-
-	async getProjectUserByUsername(
-		projectId: number,
-		username: string
-	): Promise<User[]> {
-		const response = await this.http.get(
-			`projects/${projectId}/users?search=${username}`
-		);
-
-		return response.data;
-	}
 
 	async paginatedSearch<T>(
 		url: string,

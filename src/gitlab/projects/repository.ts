@@ -1,3 +1,4 @@
+import { AxiosInstance } from 'axios';
 import { compareDesc, isAfter } from 'date-fns';
 
 import { GitlabAPI } from '../gitlab-api';
@@ -12,11 +13,17 @@ import {
 import { IProjectRepository } from './repository-interface';
 
 export class ProjectRepository implements IProjectRepository {
-	constructor(private readonly gitlabAPI: GitlabAPI) {}
+	constructor(
+		private readonly gitlabAPI: GitlabAPI,
+		private readonly gitlabHttp: AxiosInstance
+	) {}
 
-	async getProjectByName(name: string): Promise<Project | null> {
-		const projectsData = await this.gitlabAPI.getProjectByName(name);
-		const project = projectsData.find(p => p.name === name);
+	async getByName(name: string): Promise<Project | null> {
+		const { data: projectsData } = await this.gitlabHttp.get(
+			`projects?search=${name}`
+		);
+
+		const project = (projectsData as Project[]).find(p => p.name === name);
 
 		if (!project) {
 			return null;
@@ -29,11 +36,11 @@ export class ProjectRepository implements IProjectRepository {
 		projectId: number,
 		userName: string
 	): Promise<User | null> {
-		const usersData = await this.gitlabAPI.getProjectUserByUsername(
-			projectId,
-			userName
+		const { data: usersData } = await this.gitlabHttp.get(
+			`projects/${projectId}/users?search=${userName}`
 		);
-		const user = usersData.find(u => u.userName === userName);
+
+		const user = (usersData as User[]).find(u => u.userName === userName);
 
 		if (!user) {
 			return null;

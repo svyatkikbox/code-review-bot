@@ -29,7 +29,7 @@ const gitlabHttpService = httpService.create({
 const gitlabAPI = new GitlabAPI(gitlabHttpService);
 
 const UserRepo = new UserRepository(gitlabHttpService);
-const ProjectRepo = new ProjectRepository(gitlabAPI);
+const ProjectRepo = new ProjectRepository(gitlabAPI, gitlabHttpService);
 const MergeRequestRepo = new MergeRequestRepository(
 	gitlabAPI,
 	new MergeRequestMap()
