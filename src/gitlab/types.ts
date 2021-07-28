@@ -57,12 +57,8 @@ export type MergeRequestRaw = {
 	web_url: string;
 };
 
-export type MergeRequest = {
+export type MergeRequest = Omit<MergeRequestRaw, 'iid' | 'web_url'> & {
 	id: number;
-	title: string;
-	upvotes: number;
-	downvotes: number;
-	labels: MergeRequestLabel[];
 	webUrl: string;
 };
 
@@ -72,8 +68,10 @@ export type MergeRequestAwardRaw = {
 	created_at: string;
 };
 
-export type MergeRequestAward = {
-	name: AwardName;
+export type MergeRequestAward = Omit<
+	MergeRequestAwardRaw,
+	'created_at' | 'user'
+> & {
 	userName: string;
 	createdAt: string;
 };
@@ -104,7 +102,7 @@ export type MergeRequestNoteRaw = {
 	resolved: boolean;
 };
 
-export type MergeRequestNote = {
+export type MergeRequestNote = Omit<MergeRequestNoteRaw, 'created_at'> & {
 	type: string | null;
 	body: string;
 	createdAt: string;
