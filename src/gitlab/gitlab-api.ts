@@ -40,7 +40,7 @@ export class GitlabAPI {
 		return response.data;
 	}
 
-	private async paginatedSearch<T>(
+	async paginatedSearch<T>(
 		url: string,
 		params?: PaginationParams
 	): Promise<T[]> {
