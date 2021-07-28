@@ -1,4 +1,4 @@
-import { MergeRequest, MergeRequestRaw } from '../gitlab/repositories/types';
+import { MergeRequest, MergeRequestRaw } from '../gitlab/types';
 import { Mapper } from './mapper-interface';
 
 export class MergeRequestMap implements Mapper<MergeRequest, MergeRequestRaw> {

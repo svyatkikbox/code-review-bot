@@ -1,7 +1,7 @@
 import { Scenes } from 'telegraf';
 import { UserRepo } from '../../../../app';
 import { dictionary } from '../../../../dictionary';
-import { UserState } from '../../../../gitlab/repositories/types';
+import { UserState } from '../../../../gitlab/types';
 
 const stepId = 'REGISTRATION';
 const findUser = new Scenes.BaseScene<Scenes.SceneContext>(stepId);

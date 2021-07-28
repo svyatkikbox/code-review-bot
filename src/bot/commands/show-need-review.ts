@@ -1,8 +1,8 @@
 import { NarrowedContext, Scenes } from 'telegraf';
 import { BotCommand, Update } from 'telegraf/typings/core/types/typegram';
 import { dictionary } from '../../dictionary';
-import { IProjectRepository } from '../../gitlab/repositories/projects/repository-interface';
-import { CommentEvent } from '../../gitlab/repositories/types';
+import { IProjectRepository } from '../../gitlab/projects/repository-interface';
+import { CommentEvent } from '../../gitlab/types';
 import { ISubscriptionRepository } from '../subscription/repository-interface';
 import { IBotCommandHandler } from './bot-command-handler-interface';
 

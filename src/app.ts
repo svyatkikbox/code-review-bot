@@ -9,8 +9,8 @@ import { SqlDatabase } from './bot/database/database';
 import { dictionary } from './dictionary';
 import { GitlabAPI } from './gitlab/gitlab-api';
 import { httpService } from './gitlab/http-service';
-import { ProjectRepository } from './gitlab/repositories/projects/repository';
-import { UserRepository } from './gitlab/repositories/users/repository';
+import { ProjectRepository } from './gitlab/projects/repository';
+import { UserRepository } from './gitlab/users/repository';
 import { registrationScene } from './bot/scenes/registration/registration-scene';
 import { SqlSubscriptionRepository } from './bot/subscription/repository';
 

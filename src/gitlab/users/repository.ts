@@ -1,4 +1,4 @@
-import { GitlabAPI } from '../../gitlab-api';
+import { GitlabAPI } from '../gitlab-api';
 import { User } from '../types';
 import { IUserRepository } from './repository-interface';
 

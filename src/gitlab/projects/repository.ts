@@ -1,6 +1,6 @@
 import { compareDesc, isAfter } from 'date-fns';
 
-import { GitlabAPI } from '../../gitlab-api';
+import { GitlabAPI } from '../gitlab-api';
 import {
 	Mention,
 	MergeRequest,

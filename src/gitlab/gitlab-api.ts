@@ -12,7 +12,7 @@ import {
 	PaginationParams,
 	Project,
 	User,
-} from './repositories/types';
+} from './types';
 
 export class GitlabAPI {
 	constructor(private readonly http: AxiosInstance) {}
