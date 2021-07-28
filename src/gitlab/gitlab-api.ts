@@ -1,6 +1,7 @@
 import { AxiosInstance } from 'axios';
 import {
 	AwardName,
+	GitlabCredentials,
 	MergeRequest,
 	MergeRequestAward,
 	MergeRequestAwardRaw,
@@ -15,7 +16,12 @@ import {
 } from './types';
 
 export class GitlabAPI {
-	constructor(private readonly http: AxiosInstance) {}
+	constructor(private readonly http: AxiosInstance, config: GitlabCredentials) {
+		this.http.defaults = {
+			...this.http.defaults,
+			...config,
+		};
+	}
 
 	async getUserByUsername(userName: string): Promise<User[]> {
 		const response = await this.http.get(`users?username=${userName}`);

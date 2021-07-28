@@ -1,3 +1,10 @@
+export type GitlabCredentials = {
+	baseURL: string;
+	headers: {
+		'PRIVATE-TOKEN': string;
+	};
+};
+
 export enum UserState {
 	ACTIVE = 'active',
 	BLOCKED = 'blocked',
