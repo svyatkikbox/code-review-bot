@@ -5,4 +5,6 @@ export interface IMergeRequestRepository {
 		projectId: number,
 		userName: string
 	): Promise<MergeRequest[]>;
+
+	getProjectMergeRequests(projectId: number): Promise<MergeRequest[]>;
 }

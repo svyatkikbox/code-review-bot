@@ -24,4 +24,16 @@ export class MergeRequestRepository implements IMergeRequestRepository {
 
 		return mergeRequestsData;
 	}
+
+	async getProjectMergeRequests(projectId: number): Promise<MergeRequest[]> {
+		const url = `projects/${projectId}/merge_requests?state=opened`;
+		const mergeRequestsRawData =
+			await this.gitlabAPI.paginatedSearch<MergeRequestRaw>(url);
+
+		const mergeRequestsData: MergeRequest[] = mergeRequestsRawData.map(mrData =>
+			this.mapper.toDomain(mrData)
+		);
+
+		return mergeRequestsData;
+	}
 }

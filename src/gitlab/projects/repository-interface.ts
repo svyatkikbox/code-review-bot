@@ -7,6 +7,4 @@ export interface IProjectRepository {
 		projectId: number,
 		userName: string
 	): Promise<User | null>;
-
-	getProjectReviewCalls(projectId: number): Promise<CommentEvent[]>;
 }

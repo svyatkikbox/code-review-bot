@@ -1,6 +1,6 @@
 import { Scenes } from 'telegraf';
 
-import { ProjectRepo } from '../../../../app';
+import { projectRepo } from '../../../../app';
 
 const stepId = 'FindProjects';
 const findProjects = new Scenes.BaseScene<Scenes.SceneContext>(stepId);
@@ -13,7 +13,7 @@ findProjects.on('text', async ctx => {
 	let projectData = null;
 
 	try {
-		projectData = await ProjectRepo.getByName(projectName);
+		projectData = await projectRepo.getByName(projectName);
 		console.log(projectData);
 	} catch (error) {
 		return ctx.reply('Cannot find project');

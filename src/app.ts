@@ -9,16 +9,23 @@ import { registrationScene } from './bot/scenes/registration/registration-scene'
 import { SqlSubscriptionRepository } from './bot/subscription/repository';
 import config from './config';
 import { dictionary } from './dictionary';
+import { AwardRepository } from './gitlab/awards/repository';
 import { GitlabAPI } from './gitlab/gitlab-api';
+import { GitlabService } from './gitlab/gitlab-service';
 import { httpService } from './gitlab/http-service';
 import { MergeRequestRepository } from './gitlab/merge-requests/repository';
+import { NoteRepository } from './gitlab/notes/repository';
 import { ProjectRepository } from './gitlab/projects/repository';
 import { UserRepository } from './gitlab/users/repository';
-import { MergeRequestMap } from './mappers/merge-request-map';
+import { AwardMap } from './mappers/award-mapper';
+import { MergeRequestMap } from './mappers/merge-request-mapper';
+import { NoteMap } from './mappers/note-mapper';
 
 const { BOT_TOKEN } = config;
 const bot = new Telegraf<Scenes.SceneContext>(BOT_TOKEN);
 const tg = new Telegram(BOT_TOKEN);
+
+const database = new SqlDatabase(config.DATABASE_URL);
 
 const gitlabHttpService = httpService.create({
 	baseURL: config.GITLAB_URL,
@@ -28,24 +35,25 @@ const gitlabHttpService = httpService.create({
 });
 const gitlabAPI = new GitlabAPI(gitlabHttpService);
 
-const UserRepo = new UserRepository(gitlabHttpService);
-const ProjectRepo = new ProjectRepository(gitlabAPI, gitlabHttpService);
-const MergeRequestRepo = new MergeRequestRepository(
+const userRepo = new UserRepository(gitlabHttpService);
+const projectRepo = new ProjectRepository(gitlabHttpService);
+const mergeRequestRepo = new MergeRequestRepository(
 	gitlabAPI,
 	new MergeRequestMap()
 );
+const awardRepo = new AwardRepository(gitlabHttpService, new AwardMap());
+const noteRepo = new NoteRepository(gitlabAPI, new NoteMap());
+const sqlSubscriptionRepo = new SqlSubscriptionRepository(database);
 
-const database = new SqlDatabase(config.DATABASE_URL);
-
-const SqlSubscriptionRepo = new SqlSubscriptionRepository(database);
+const gitlabService = new GitlabService(mergeRequestRepo, noteRepo, awardRepo);
 
 const showNeedReviewCommand = new ShowNeedReviewCommand(
-	ProjectRepo,
-	SqlSubscriptionRepo
+	gitlabService,
+	sqlSubscriptionRepo
 );
 const showMyOpenMrsCommand = new ShowMyOpenMergeRequests(
-	MergeRequestRepo,
-	SqlSubscriptionRepo
+	mergeRequestRepo,
+	sqlSubscriptionRepo
 );
 const registrationCommand = new RegistrationCommand(registrationScene);
 const helpCommand = new HelpCommand();
@@ -85,4 +93,4 @@ bot.hears(dictionary.buttons.showMyOpenMrsCommand, ctx =>
 	showMyOpenMrsCommand.handler(ctx)
 );
 
-export { bot, UserRepo, ProjectRepo, SqlSubscriptionRepo };
+export { bot, userRepo, projectRepo, sqlSubscriptionRepo };

@@ -1,15 +1,15 @@
+import { GitlabService } from 'src/gitlab/gitlab-service';
 import { NarrowedContext, Scenes } from 'telegraf';
 import { BotCommand, Update } from 'telegraf/typings/core/types/typegram';
 import { dictionary } from '../../dictionary';
-import { IProjectRepository } from '../../gitlab/projects/repository-interface';
 import { CommentEvent } from '../../gitlab/types';
 import { ISubscriptionRepository } from '../subscription/repository-interface';
 import { IBotCommandHandler } from './bot-command-handler-interface';
 
 class ShowNeedReviewCommand implements IBotCommandHandler {
 	constructor(
-		private readonly ProjectRepo: IProjectRepository,
-		private readonly SubscriptionRepo: ISubscriptionRepository
+		private readonly gitlabService: GitlabService,
+		private readonly subscriptionRepo: ISubscriptionRepository
 	) {}
 
 	get botCommand(): BotCommand {
@@ -25,13 +25,13 @@ class ShowNeedReviewCommand implements IBotCommandHandler {
 			Update.MessageUpdate
 		>
 	) {
-		const { projects } = await this.SubscriptionRepo.getUserSubscriptions(
+		const { projects } = await this.subscriptionRepo.getUserSubscriptions(
 			'user'
 		);
 		const reviewCalls: CommentEvent[] = [];
 
 		for (const { id } of projects) {
-			const projectReviewCalls = await this.ProjectRepo.getProjectReviewCalls(
+			const projectReviewCalls = await this.gitlabService.getProjectReviewCalls(
 				id
 			);
 

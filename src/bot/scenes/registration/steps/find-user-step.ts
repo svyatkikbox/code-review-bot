@@ -1,5 +1,5 @@
 import { Scenes } from 'telegraf';
-import { UserRepo } from '../../../../app';
+import { userRepo } from '../../../../app';
 import { dictionary } from '../../../../dictionary';
 import { UserState } from '../../../../gitlab/types';
 
@@ -13,7 +13,7 @@ findUser.on('text', async ctx => {
 	let user = null;
 
 	try {
-		user = await UserRepo.getByUsername(userName);
+		user = await userRepo.getByUsername(userName);
 	} catch (error) {
 		console.error(error);
 		return ctx.reply(dictionary.smthWentWrong);
