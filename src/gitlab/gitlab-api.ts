@@ -43,7 +43,7 @@ export class GitlabAPI {
 	private async paginatedSearch<T>(
 		url: string,
 		params?: PaginationParams
-	): Promise<T> {
+	): Promise<T[]> {
 		const perPage = params?.perPage || 100;
 		let page = params?.page || 1;
 
@@ -65,14 +65,15 @@ export class GitlabAPI {
 				end = true;
 			}
 		}
-		return data as unknown as T;
+
+		return data as T[]; // TODO add runtime validation
 	}
 
 	async getProjectMergeRequestsData(
 		projectId: number
 	): Promise<MergeRequest[]> {
 		const url = `projects/${projectId}/merge_requests?state=opened`;
-		const mergeRequestsRawData = await this.paginatedSearch<MergeRequestRaw[]>(
+		const mergeRequestsRawData = await this.paginatedSearch<MergeRequestRaw>(
 			url
 		);
 
@@ -95,7 +96,7 @@ export class GitlabAPI {
 		userName: string
 	): Promise<MergeRequest[]> {
 		const url = `/projects/${projectId}/merge_requests?state=opened&author_username=${userName}`;
-		const mergeRequestsRawData = await this.paginatedSearch<MergeRequestRaw[]>(
+		const mergeRequestsRawData = await this.paginatedSearch<MergeRequestRaw>(
 			url
 		);
 		const mergeRequestsData: MergeRequest[] = mergeRequestsRawData.map(
@@ -152,9 +153,9 @@ export class GitlabAPI {
 		mergeRequestId: number
 	): Promise<MergeRequestNote[]> {
 		const url = `/projects/${projectId}/merge_requests/${mergeRequestId}/notes`;
-		const mergeRequestNoteRaw = await this.paginatedSearch<
-			MergeRequestNoteRaw[]
-		>(url);
+		const mergeRequestNoteRaw = await this.paginatedSearch<MergeRequestNoteRaw>(
+			url
+		);
 
 		const notes: MergeRequestNote[] = mergeRequestNoteRaw
 			.map(note => ({
