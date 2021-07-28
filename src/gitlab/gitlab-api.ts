@@ -17,12 +17,6 @@ import {
 export class GitlabAPI {
 	constructor(private readonly http: AxiosInstance) {}
 
-	async getUserByUsername(userName: string): Promise<User[]> {
-		const response = await this.http.get(`users?username=${userName}`);
-
-		return response.data;
-	}
-
 	async getProjectByName(name: string): Promise<Project[]> {
 		const response = await this.http.get(`projects?search=${name}`);
 
