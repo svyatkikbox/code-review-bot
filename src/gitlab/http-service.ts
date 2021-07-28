@@ -1,3 +1,3 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosStatic } from 'axios';
 
-export const httpService: AxiosInstance = axios.create();
+export const httpService: AxiosStatic = axios;

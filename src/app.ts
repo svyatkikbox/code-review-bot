@@ -20,14 +20,15 @@ const { BOT_TOKEN } = config;
 const bot = new Telegraf<Scenes.SceneContext>(BOT_TOKEN);
 const tg = new Telegram(BOT_TOKEN);
 
-const gitlabAPI = new GitlabAPI(httpService, {
+const gitlabHttpService = httpService.create({
 	baseURL: config.GITLAB_URL,
 	headers: {
 		'PRIVATE-TOKEN': config.GITLAB_TOKEN,
 	},
 });
+const gitlabAPI = new GitlabAPI(gitlabHttpService);
 
-const UserRepo = new UserRepository(gitlabAPI);
+const UserRepo = new UserRepository(gitlabHttpService);
 const ProjectRepo = new ProjectRepository(gitlabAPI);
 const MergeRequestRepo = new MergeRequestRepository(
 	gitlabAPI,
