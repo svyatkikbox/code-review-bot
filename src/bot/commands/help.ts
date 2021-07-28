@@ -1,6 +1,6 @@
 import { NarrowedContext, Scenes } from 'telegraf';
 import { BotCommand, Update } from 'typegram';
-import { IBotCommandHandler } from './bot-command-handler-interface';
+import { IBotCommandHandler } from './command-handler-interface';
 
 class HelpCommand implements IBotCommandHandler {
 	get botCommand(): BotCommand {

@@ -1,7 +1,7 @@
 import { NarrowedContext, Scenes } from 'telegraf';
 import { BotCommand, Update } from 'typegram';
 import { BotScene } from '../scenes/types';
-import { IBotCommandHandler } from './bot-command-handler-interface';
+import { IBotCommandHandler } from './command-handler-interface';
 
 class RegistrationCommand implements IBotCommandHandler {
 	constructor(private readonly registrationScene: BotScene) {}

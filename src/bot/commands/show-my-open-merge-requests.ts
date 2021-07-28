@@ -6,7 +6,7 @@ import { dictionary } from '../../dictionary';
 import { IProjectRepository } from '../../gitlab/projects/repository-interface';
 import { MergeRequest } from '../../gitlab/types';
 import { ISubscriptionRepository } from '../subscription/repository-interface';
-import { IBotCommandHandler } from './bot-command-handler-interface';
+import { IBotCommandHandler } from './command-handler-interface';
 
 class ShowMyOpenMergeRequests implements IBotCommandHandler {
 	constructor(

@@ -2,7 +2,7 @@ import { NarrowedContext, Scenes } from 'telegraf';
 import { BotCommand, Update } from 'typegram';
 
 import { menuKeyboard } from '../keyboards/bot-menu';
-import { IBotCommandHandler } from './bot-command-handler-interface';
+import { IBotCommandHandler } from './command-handler-interface';
 
 class MenuCommand implements IBotCommandHandler {
 	get botCommand(): BotCommand {
