@@ -1,10 +1,10 @@
-import { AxiosInstance } from 'axios';
+import { IHttpService } from '../http-service';
 
 import { Project, User } from '../types';
 import { IProjectRepository } from './repository-interface';
 
 export class ProjectRepository implements IProjectRepository {
-	constructor(private readonly gitlabHttp: AxiosInstance) {}
+	constructor(private readonly gitlabHttp: IHttpService) {}
 
 	async getByName(name: string): Promise<Project | null> {
 		const { data: projectsData } = await this.gitlabHttp.get(

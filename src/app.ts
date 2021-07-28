@@ -10,9 +10,8 @@ import { SqlSubscriptionRepository } from './bot/subscription/repository';
 import config from './config';
 import { dictionary } from './dictionary';
 import { AwardRepository } from './gitlab/awards/repository';
-import { GitlabAPI } from './gitlab/gitlab-api';
 import { GitlabService } from './gitlab/gitlab-service';
-import { httpService } from './gitlab/http-service';
+import { HttpService } from './gitlab/http-service';
 import { MergeRequestRepository } from './gitlab/merge-requests/repository';
 import { NoteRepository } from './gitlab/notes/repository';
 import { ProjectRepository } from './gitlab/projects/repository';
@@ -27,21 +26,20 @@ const tg = new Telegram(BOT_TOKEN);
 
 const database = new SqlDatabase(config.DATABASE_URL);
 
-const gitlabHttpService = httpService.create({
+const gitlabAPI = new HttpService({
 	baseURL: config.GITLAB_URL,
 	headers: {
 		'PRIVATE-TOKEN': config.GITLAB_TOKEN,
 	},
 });
-const gitlabAPI = new GitlabAPI(gitlabHttpService);
 
-const userRepo = new UserRepository(gitlabHttpService);
-const projectRepo = new ProjectRepository(gitlabHttpService);
+const userRepo = new UserRepository(gitlabAPI);
+const projectRepo = new ProjectRepository(gitlabAPI);
 const mergeRequestRepo = new MergeRequestRepository(
 	gitlabAPI,
 	new MergeRequestMap()
 );
-const awardRepo = new AwardRepository(gitlabHttpService, new AwardMap());
+const awardRepo = new AwardRepository(gitlabAPI, new AwardMap());
 const noteRepo = new NoteRepository(gitlabAPI, new NoteMap());
 const sqlSubscriptionRepo = new SqlSubscriptionRepository(database);
 

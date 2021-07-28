@@ -1,6 +1,5 @@
-import { AxiosInstance } from 'axios';
-
 import { Mapper } from '../../mappers/mapper-interface';
+import { IHttpService } from '../http-service';
 import {
 	AwardName,
 	MergeRequestAward,
@@ -11,7 +10,7 @@ import { IAwardRepository } from './repository-interface';
 
 export class AwardRepository implements IAwardRepository {
 	constructor(
-		private readonly gitlabAPI: AxiosInstance,
+		private readonly gitlabAPI: IHttpService,
 		private readonly mapper: Mapper<MergeRequestAward, MergeRequestAwardRaw>
 	) {}
 
@@ -19,10 +18,9 @@ export class AwardRepository implements IAwardRepository {
 		projectId: number,
 		mergeRequestId: number
 	): Promise<MergeRequestReviewAwards> {
-		const response = await this.gitlabAPI.get(
+		const mergeRequestAwards = await this.gitlabAPI.get<MergeRequestAwardRaw[]>(
 			`/projects/${projectId}/merge_requests/${mergeRequestId}/award_emoji/`
 		);
-		const mergeRequestAwards: MergeRequestAwardRaw[] = response.data;
 		const awards: MergeRequestAward[] = mergeRequestAwards.map(award =>
 			this.mapper.toDomain(award)
 		);

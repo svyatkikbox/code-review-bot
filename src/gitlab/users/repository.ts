@@ -1,9 +1,9 @@
-import { AxiosInstance } from 'axios';
+import { IHttpService } from '../http-service';
 import { User } from '../types';
 import { IUserRepository } from './repository-interface';
 
 export class UserRepository implements IUserRepository {
-	constructor(private readonly gitlabAPI: AxiosInstance) {}
+	constructor(private readonly gitlabAPI: IHttpService) {}
 
 	async getByUsername(userName: string): Promise<User | null> {
 		const { data: usersData } = await this.gitlabAPI.get(

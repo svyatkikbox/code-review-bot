@@ -1,11 +1,11 @@
 import { Mapper } from 'src/mappers/mapper-interface';
-import { GitlabAPI } from '../gitlab-api';
+import { HttpService } from '../http-service';
 import { MergeRequestNote, MergeRequestNoteRaw } from '../types';
 import { INoteRepository } from './repository-interface';
 
 export class NoteRepository implements INoteRepository {
 	constructor(
-		private readonly gitlabAPI: GitlabAPI,
+		private readonly gitlabAPI: HttpService,
 		private readonly mapper: Mapper<MergeRequestNote, MergeRequestNoteRaw>
 	) {}
 
@@ -15,7 +15,7 @@ export class NoteRepository implements INoteRepository {
 	): Promise<MergeRequestNote[]> {
 		const url = `/projects/${projectId}/merge_requests/${mergeRequestId}/notes`;
 		const mergeRequestNoteRaw =
-			await this.gitlabAPI.paginatedSearch<MergeRequestNoteRaw>(url);
+			await this.gitlabAPI.fetchPaginated<MergeRequestNoteRaw>(url);
 
 		const notes: MergeRequestNote[] = mergeRequestNoteRaw
 			.map(note => this.mapper.toDomain(note))
