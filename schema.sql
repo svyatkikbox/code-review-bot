@@ -19,6 +19,6 @@ CREATE TABLE IF NOT EXISTS MergeRequests
 	title VARCHAR(255),
 	upvotes integer NOT NULL,
 	downvotes integer NOT NULL,
-	web_url string,
+	web_url VARCHAR(255) NOT NULL,
 	labels VARCHAR(255)[]
 );
