@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS Users
+CREATE TABLE IF NOT EXISTS users
 (
 	id SERIAL PRIMARY KEY,
 	tg_username VARCHAR(255) NOT NULL,
@@ -6,19 +6,16 @@ CREATE TABLE IF NOT EXISTS Users
 	chat_id integer NOT NULL UNIQUE
 );
 
-CREATE TABLE IF NOT EXISTS Subscriptions
+CREATE TABLE IF NOT EXISTS subscriptions
 (
 	id SERIAL PRIMARY KEY,
 	user_id integer NOT NULL,
-	projects integer[] NOT NULL
+	project_ids integer[] NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS MergeRequests
+CREATE TABLE IF NOT EXISTS merge_requests_data_cache
 (
 	id SERIAL PRIMARY KEY,
-	title VARCHAR(255),
-	upvotes integer NOT NULL,
-	downvotes integer NOT NULL,
-	web_url VARCHAR(255) NOT NULL,
-	labels VARCHAR(255)[]
+	project_id integer NOT NULL,
+	data jsonb
 );
