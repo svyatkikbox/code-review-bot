@@ -111,6 +111,9 @@ export type MergeRequestNote = Omit<MergeRequestNoteRaw, 'created_at'> & {
 	resolved: boolean;
 };
 
+/**
+ * @deprecated
+ */
 export type Mention = {
 	createdAt: string;
 	resolved: boolean;
