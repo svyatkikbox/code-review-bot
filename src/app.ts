@@ -19,6 +19,7 @@ import { UserRepository } from './gitlab/users/repository';
 import { AwardMap } from './mappers/award-mapper';
 import { MergeRequestMap } from './mappers/merge-request-mapper';
 import { NoteMap } from './mappers/note-mapper';
+import { SubscriptionMap } from './mappers/subscription-mapper';
 
 const { BOT_TOKEN } = config;
 const bot = new Telegraf<Scenes.SceneContext>(BOT_TOKEN);
@@ -41,7 +42,10 @@ const mergeRequestRepo = new MergeRequestRepository(
 );
 const awardRepo = new AwardRepository(gitlabAPI, new AwardMap());
 const noteRepo = new NoteRepository(gitlabAPI, new NoteMap());
-const sqlSubscriptionRepo = new SqlSubscriptionRepository(database);
+const sqlSubscriptionRepo = new SqlSubscriptionRepository(
+	database,
+	new SubscriptionMap()
+);
 
 const gitlabService = new GitlabService(mergeRequestRepo, noteRepo, awardRepo);
 
