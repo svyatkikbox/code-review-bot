@@ -1,7 +1,7 @@
 import { MergeRequest, MergeRequestRaw } from '../gitlab/types';
-import { Mapper } from './mapper-interface';
+import { IMapper } from './mapper-interface';
 
-export class MergeRequestMap implements Mapper<MergeRequest, MergeRequestRaw> {
+export class MergeRequestMap implements IMapper<MergeRequest, MergeRequestRaw> {
 	toModel(entity: MergeRequest): MergeRequestRaw {
 		return {
 			iid: entity.id,

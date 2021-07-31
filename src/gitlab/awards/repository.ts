@@ -1,4 +1,4 @@
-import { Mapper } from '../../mappers/mapper-interface';
+import { IMapper } from '../../mappers/mapper-interface';
 import { IHttpService } from '../http-service';
 import {
 	AwardName,
@@ -11,7 +11,7 @@ import { IAwardRepository } from './repository-interface';
 export class AwardRepository implements IAwardRepository {
 	constructor(
 		private readonly gitlabAPI: IHttpService,
-		private readonly mapper: Mapper<MergeRequestAward, MergeRequestAwardRaw>
+		private readonly mapper: IMapper<MergeRequestAward, MergeRequestAwardRaw>
 	) {}
 
 	async getMergeRequestAwards(

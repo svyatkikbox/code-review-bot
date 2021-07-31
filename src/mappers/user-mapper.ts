@@ -1,7 +1,7 @@
 import { User, UserRaw } from '../gitlab/types';
-import { Mapper } from './mapper-interface';
+import { IMapper } from './mapper-interface';
 
-export class UserMap implements Mapper<User, UserRaw> {
+export class UserMap implements IMapper<User, UserRaw> {
 	toModel(entity: User): UserRaw {
 		throw new Error('Method not implemented');
 	}

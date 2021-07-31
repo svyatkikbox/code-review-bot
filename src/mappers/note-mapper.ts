@@ -1,7 +1,7 @@
 import { MergeRequestNote, MergeRequestNoteRaw } from '../gitlab/types';
-import { Mapper } from './mapper-interface';
+import { IMapper } from './mapper-interface';
 
-export class NoteMap implements Mapper<MergeRequestNote, MergeRequestNoteRaw> {
+export class NoteMap implements IMapper<MergeRequestNote, MergeRequestNoteRaw> {
 	toDomain(raw: MergeRequestNoteRaw): MergeRequestNote {
 		return {
 			type: raw.type,

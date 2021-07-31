@@ -1,4 +1,4 @@
-import { Mapper } from 'src/mappers/mapper-interface';
+import { IMapper } from 'src/mappers/mapper-interface';
 import { HttpService } from '../http-service';
 import { MergeRequestNote, MergeRequestNoteRaw } from '../types';
 import { INoteRepository } from './repository-interface';
@@ -6,7 +6,7 @@ import { INoteRepository } from './repository-interface';
 export class NoteRepository implements INoteRepository {
 	constructor(
 		private readonly gitlabAPI: HttpService,
-		private readonly mapper: Mapper<MergeRequestNote, MergeRequestNoteRaw>
+		private readonly mapper: IMapper<MergeRequestNote, MergeRequestNoteRaw>
 	) {}
 
 	async getMergeRequestNotes(

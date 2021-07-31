@@ -1,4 +1,4 @@
-import { Mapper } from '../../mappers/mapper-interface';
+import { IMapper } from '../../mappers/mapper-interface';
 import { IHttpService } from '../http-service';
 import { MergeRequest, MergeRequestRaw } from '../types';
 import { IMergeRequestRepository } from './repository-interface';
@@ -6,7 +6,7 @@ import { IMergeRequestRepository } from './repository-interface';
 export class MergeRequestRepository implements IMergeRequestRepository {
 	constructor(
 		private readonly gitlabAPI: IHttpService,
-		private readonly mapper: Mapper<MergeRequest, MergeRequestRaw>
+		private readonly mapper: IMapper<MergeRequest, MergeRequestRaw>
 	) {}
 
 	async getProjectUserMergeRequests(

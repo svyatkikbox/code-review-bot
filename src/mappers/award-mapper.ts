@@ -1,8 +1,8 @@
 import { MergeRequestAward, MergeRequestAwardRaw } from '../gitlab/types';
-import { Mapper } from './mapper-interface';
+import { IMapper } from './mapper-interface';
 
 export class AwardMap
-	implements Mapper<MergeRequestAward, MergeRequestAwardRaw>
+	implements IMapper<MergeRequestAward, MergeRequestAwardRaw>
 {
 	toDomain(raw: MergeRequestAwardRaw): MergeRequestAward {
 		return {
