@@ -1,4 +1,4 @@
-import { IMergeRequestRepository } from 'src/gitlab/merge-requests/repository-interface';
+import { IMergeRequestRepository } from '../../gitlab/merge-requests/repository-interface';
 import { NarrowedContext, Scenes } from 'telegraf';
 import { BotCommand, Update } from 'telegraf/typings/core/types/typegram';
 
