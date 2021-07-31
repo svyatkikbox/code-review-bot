@@ -111,15 +111,6 @@ export type MergeRequestNote = Omit<MergeRequestNoteRaw, 'created_at'> & {
 	resolved: boolean;
 };
 
-/**
- * @deprecated
- */
-export type Mention = {
-	createdAt: string;
-	resolved: boolean;
-	resolvable: boolean;
-};
-
 export type PaginationParams = {
 	perPage?: number;
 	page?: number;

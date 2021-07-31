@@ -4,7 +4,6 @@ import { IAwardRepository } from './awards/repository-interface';
 import { IMergeRequestRepository } from './merge-requests/repository-interface';
 import { INoteRepository } from './notes/repository-interface';
 import {
-	Mention,
 	MergeRequest,
 	MergeRequestNote,
 	MergeRequestReviewAwards,
@@ -20,9 +19,10 @@ export class GitlabService {
 	private extractMentionsFromNotes(
 		userName: string,
 		mrNotes: MergeRequestNote[]
-	): Mention[] {
+	): MergeRequestNote[] {
 		const userMentionRegex = new RegExp(/\@\w*/g);
 		const mentions = mrNotes.map(note => ({
+			...note,
 			userNames: note.body.match(userMentionRegex),
 			body: note.body,
 			createdAt: note.createdAt,
@@ -36,14 +36,18 @@ export class GitlabService {
 		return userMentions;
 	}
 
-	private extractUnresolvedMentions(userMentions: Mention[]): Mention[] {
+	private extractUnresolvedMentions(
+		userMentions: MergeRequestNote[]
+	): MergeRequestNote[] {
 		const unResolvedMentions = userMentions.filter(
 			mention => mention.resolvable && !mention.resolved
 		);
 		return unResolvedMentions;
 	}
 
-	private extractUnresolvableMentions(userMentions: Mention[]): Mention[] {
+	private extractUnresolvableMentions(
+		userMentions: MergeRequestNote[]
+	): MergeRequestNote[] {
 		const unResolvableMentions = userMentions.filter(
 			mention => !mention.resolvable
 		);
@@ -81,7 +85,7 @@ export class GitlabService {
 	 */
 	shouldUserBeCalledInMergeRequest(
 		userName: string,
-		userMentions: Mention[],
+		userMentions: MergeRequestNote[],
 		mergeRequestAwards: MergeRequestReviewAwards
 	): boolean {
 		let shoulBeCalled = false;
