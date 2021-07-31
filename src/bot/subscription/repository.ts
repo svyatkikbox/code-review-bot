@@ -3,7 +3,7 @@ import { SqlDatabase } from '../database/database';
 import { ISubscriptionRepository } from './repository-interface';
 import { Subscription, SubscriptionRaw } from './types';
 
-const PROJECTS = [{ name: 'uKit', id: 1 }];
+const Subscription = { userId: 1, projects: [{ name: 'uKit', id: 1 }] };
 
 class SqlSubscriptionRepository implements ISubscriptionRepository {
 	constructor(
@@ -28,8 +28,7 @@ class SqlSubscriptionRepository implements ISubscriptionRepository {
 	}
 
 	async getUserSubscriptions(username: string): Promise<Subscription> {
-		const subscribedProjects = PROJECTS;
-		return { projects: subscribedProjects };
+		return Subscription;
 	}
 }
 

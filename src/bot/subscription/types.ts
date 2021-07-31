@@ -10,5 +10,6 @@ export type SubscriptionRaw = {
 };
 
 export type Subscription = {
+	userId: number;
 	projects: Project[];
 };
