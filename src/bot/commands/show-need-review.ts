@@ -1,7 +1,7 @@
-import { GitlabService } from 'src/gitlab/gitlab-service';
 import { NarrowedContext, Scenes } from 'telegraf';
 import { BotCommand, Update } from 'telegraf/typings/core/types/typegram';
 import { dictionary } from '../../dictionary';
+import { GitlabService } from '../../gitlab/gitlab-service';
 import { CommentEvent } from '../../gitlab/types';
 import { ISubscriptionRepository } from '../subscription/repository-interface';
 import { IBotCommandHandler } from './command-handler-interface';
