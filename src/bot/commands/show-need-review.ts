@@ -2,13 +2,15 @@ import { NarrowedContext, Scenes } from 'telegraf';
 import { BotCommand, Update } from 'telegraf/typings/core/types/typegram';
 import { dictionary } from '../../dictionary';
 import { GitlabService } from '../../gitlab/gitlab-service';
+import { IRenderStrategy } from '../markup/render-strategy-interface';
 import { ISubscriptionRepository } from '../subscription/repository-interface';
 import { IBotCommandHandler } from './command-handler-interface';
 
 class ShowNeedReviewCommand implements IBotCommandHandler {
 	constructor(
 		private readonly gitlabService: GitlabService,
-		private readonly subscriptionRepo: ISubscriptionRepository
+		private readonly subscriptionRepo: ISubscriptionRepository,
+		private readonly renderReviewCalls: IRenderStrategy
 	) {}
 
 	get botCommand(): BotCommand {

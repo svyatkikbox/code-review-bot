@@ -36,7 +36,6 @@ type Note = {
 	noteableType: NoteableType;
 };
 
-
 export type MergeRequestRaw = {
 	iid: number;
 	title: string;
@@ -53,7 +52,7 @@ export type MergeRequest = Omit<MergeRequestRaw, 'iid' | 'web_url'> & {
 
 export type MergeRequestAwardRaw = {
 	name: AwardName;
-	user: User;
+	user: UserRaw;
 	created_at: string;
 };
 

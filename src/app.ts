@@ -99,4 +99,4 @@ bot.hears(dictionary.buttons.showMyOpenMrsCommand, ctx =>
 	showMyOpenMrsCommand.handler(ctx)
 );
 
-export { bot, userRepo, projectRepo, sqlSubscriptionRepo };
+export { bot, userRepo, projectRepo, sqlSubscriptionRepo, gitlabService };

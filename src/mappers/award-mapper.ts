@@ -7,7 +7,7 @@ export class AwardMap
 	toDomain(raw: MergeRequestAwardRaw): MergeRequestAward {
 		return {
 			name: raw.name,
-			userName: raw.user.userName,
+			userName: raw.user.username,
 			createdAt: raw.created_at,
 		};
 	}
