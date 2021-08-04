@@ -36,17 +36,6 @@ type Note = {
 	noteableType: NoteableType;
 };
 
-export type CommentEvent = {
-	projectId: number;
-	targetTitle: string;
-	note: Note;
-};
-
-export type ReviewCall = {
-	link: string;
-	title: string;
-	awards: MergeRequestReviewAwards;
-};
 
 export type MergeRequestRaw = {
 	iid: number;
