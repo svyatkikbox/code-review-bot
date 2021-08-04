@@ -1,4 +1,4 @@
-import { User, Project, CommentEvent, MergeRequest } from '../types';
+import { User, Project } from '../types';
 
 export interface IProjectRepository {
 	getByName(name: string): Promise<Project | null>;
