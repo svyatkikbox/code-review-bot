@@ -6,6 +6,7 @@ import { ShowMyOpenMergeRequests } from './bot/commands/show-my-open-merge-reque
 import { ShowNeedReviewCommand } from './bot/commands/show-need-review';
 import { SqlDatabase } from './bot/database/database';
 import { RenderMergeRequestsStrategy } from './bot/markup/render-merge-requests-strategy';
+import { RenderReviewCallsStrategy } from './bot/markup/render-review-calls-strategy';
 import { registrationScene } from './bot/scenes/registration/registration-scene';
 import { SqlSubscriptionRepository } from './bot/subscription/repository';
 import config from './config';
@@ -52,7 +53,8 @@ const gitlabService = new GitlabService(mergeRequestRepo, noteRepo, awardRepo);
 
 const showNeedReviewCommand = new ShowNeedReviewCommand(
 	gitlabService,
-	sqlSubscriptionRepo
+	sqlSubscriptionRepo,
+	new RenderReviewCallsStrategy()
 );
 const showMyOpenMrsCommand = new ShowMyOpenMergeRequests(
 	mergeRequestRepo,
