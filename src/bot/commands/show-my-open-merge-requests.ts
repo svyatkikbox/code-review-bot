@@ -20,7 +20,7 @@ class ShowMyOpenMergeRequests implements IBotCommandHandler {
 		};
 	}
 
-	renderMarkup(myOpenMrs: MergeRequest[]): string {
+	renderMarkup(myOpenMrs: MergeRequest[]) {
 		let markup = `<b>${dictionary.commands.yourMrs}</b>\n`;
 
 		for (const mrData of myOpenMrs) {
