@@ -29,13 +29,6 @@ export type UserRaw = {
 
 export type User = Omit<UserRaw, 'username'> & { userName: string };
 
-type Note = {
-	body: string;
-	noteableIid: number;
-	projectId: number;
-	noteableType: NoteableType;
-};
-
 export type MergeRequestRaw = {
 	iid: number;
 	title: string;
