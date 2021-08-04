@@ -5,6 +5,7 @@ import { RegistrationCommand } from './bot/commands/registration';
 import { ShowMyOpenMergeRequests } from './bot/commands/show-my-open-merge-requests';
 import { ShowNeedReviewCommand } from './bot/commands/show-need-review';
 import { SqlDatabase } from './bot/database/database';
+import { RenderMergeRequestsStrategy } from './bot/markup/render-merge-requests-strategy';
 import { registrationScene } from './bot/scenes/registration/registration-scene';
 import { SqlSubscriptionRepository } from './bot/subscription/repository';
 import config from './config';
@@ -55,7 +56,8 @@ const showNeedReviewCommand = new ShowNeedReviewCommand(
 );
 const showMyOpenMrsCommand = new ShowMyOpenMergeRequests(
 	mergeRequestRepo,
-	sqlSubscriptionRepo
+	sqlSubscriptionRepo,
+	new RenderMergeRequestsStrategy()
 );
 const registrationCommand = new RegistrationCommand(registrationScene);
 const helpCommand = new HelpCommand();
