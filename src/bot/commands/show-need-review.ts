@@ -39,9 +39,14 @@ class ShowNeedReviewCommand implements IBotCommandHandler {
 			reviewCalls.push(...projectReviewCalls);
 		}
 
-		return ctx.replyWithMarkdownV2(
-			`*${dictionary.commands.whereYouWereMentioned}*`
-		);
+		if (reviewCalls.length) {
+			const markup = this.renderReviewCalls.render(reviewCalls);
+			return ctx.replyWithHTML(markup, { disable_web_page_preview: true });
+		} else {
+			return ctx.replyWithMarkdownV2(
+				`*${dictionary.commands.whereYouWereMentioned}*`
+			);
+		}
 	}
 }
 
