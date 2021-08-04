@@ -1,6 +1,6 @@
-import { dictionary } from "../../dictionary";
-import { MergeRequest } from "../../gitlab/types";
-import { IRenderStrategy } from "./render-strategy-interface";
+import { dictionary } from '../../dictionary';
+import { MergeRequest } from '../../gitlab/types';
+import { IRenderStrategy } from './render-strategy-interface';
 
 export class RenderReviewCallsStrategy implements IRenderStrategy {
 	render(mrsData: MergeRequest[]) {
