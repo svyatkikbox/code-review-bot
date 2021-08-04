@@ -121,7 +121,7 @@ export class GitlabService {
 		return shoulBeCalled;
 	}
 
-	async getProjectReviewCalls(projectId: number): Promise<any[]> {
+	async getProjectReviewCalls(projectId: number): Promise<MergeRequest[]> {
 		const mergeRequestsData =
 			await this.mergeRequestRepo.getProjectMergeRequests(projectId);
 
