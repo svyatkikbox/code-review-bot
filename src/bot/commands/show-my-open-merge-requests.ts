@@ -6,11 +6,13 @@ import { dictionary } from '../../dictionary';
 import { MergeRequest } from '../../gitlab/types';
 import { ISubscriptionRepository } from '../subscription/repository-interface';
 import { IBotCommandHandler } from './command-handler-interface';
+import { IRenderStrategy } from '../markup/render-strategy-interface';
 
 class ShowMyOpenMergeRequests implements IBotCommandHandler {
 	constructor(
 		private readonly MergeRequestRepo: IMergeRequestRepository,
-		private readonly SubscriptionRepo: ISubscriptionRepository
+		private readonly SubscriptionRepo: ISubscriptionRepository,
+		private readonly RenderMarkup: IRenderStrategy
 	) {}
 
 	get botCommand(): BotCommand {
@@ -18,17 +20,6 @@ class ShowMyOpenMergeRequests implements IBotCommandHandler {
 			command: 'show_my_open_merge_requests',
 			description: 'Мои недоделанные MR-ы',
 		};
-	}
-
-	renderMarkup(myOpenMrs: MergeRequest[]) {
-		let markup = `<b>${dictionary.commands.yourMrs}</b>\n`;
-
-		for (const mrData of myOpenMrs) {
-			const { webUrl, title, upvotes, downvotes } = mrData;
-			markup += `<a href="${webUrl}">${title}</a> 👍 ${upvotes} 👎 ${downvotes}\n`;
-		}
-
-		return markup;
 	}
 
 	async handler(
@@ -50,7 +41,7 @@ class ShowMyOpenMergeRequests implements IBotCommandHandler {
 		}
 
 		if (myOpenMrs.length) {
-			const markup = this.renderMarkup(myOpenMrs);
+			const markup = this.RenderMarkup.render(myOpenMrs);
 			return ctx.replyWithHTML(markup, { disable_web_page_preview: true });
 		} else {
 			return ctx.replyWithMarkdownV2(`*${dictionary.commands.emptyMrs}`);
