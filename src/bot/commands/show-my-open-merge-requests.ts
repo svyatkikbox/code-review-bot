@@ -10,9 +10,9 @@ import { IRenderStrategy } from '../markup/render-strategy-interface';
 
 class ShowMyOpenMergeRequests implements IBotCommandHandler {
 	constructor(
-		private readonly MergeRequestRepo: IMergeRequestRepository,
-		private readonly SubscriptionRepo: ISubscriptionRepository,
-		private readonly RenderMarkup: IRenderStrategy
+		private readonly mergeRequestRepo: IMergeRequestRepository,
+		private readonly subscriptionRepo: ISubscriptionRepository,
+		private readonly renderMarkup: IRenderStrategy
 	) {}
 
 	get botCommand(): BotCommand {
@@ -28,20 +28,20 @@ class ShowMyOpenMergeRequests implements IBotCommandHandler {
 			Update.MessageUpdate
 		>
 	) {
-		const { projects } = await this.SubscriptionRepo.getUserSubscriptions(
+		const { projects } = await this.subscriptionRepo.getUserSubscriptions(
 			'user'
 		);
 		const myOpenMrs: MergeRequest[] = [];
 
 		for (const { id } of projects) {
 			const myProjectMrs =
-				await this.MergeRequestRepo.getProjectUserMergeRequests(id, 'svyat');
+				await this.mergeRequestRepo.getProjectUserMergeRequests(id, 'svyat');
 
 			myOpenMrs.push(...myProjectMrs);
 		}
 
 		if (myOpenMrs.length) {
-			const markup = this.RenderMarkup.render(myOpenMrs);
+			const markup = this.renderMarkup.render(myOpenMrs);
 			return ctx.replyWithHTML(markup, { disable_web_page_preview: true });
 		} else {
 			return ctx.replyWithMarkdownV2(`*${dictionary.commands.emptyMrs}`);
