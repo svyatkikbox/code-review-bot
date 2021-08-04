@@ -20,7 +20,7 @@ class ShowMyOpenMergeRequests implements IBotCommandHandler {
 		};
 	}
 
-	renderMarkupForReply(myOpenMrs: MergeRequest[]): string {
+	renderMarkup(myOpenMrs: MergeRequest[]): string {
 		let markup = `<b>${dictionary.commands.yourMrs}</b>\n`;
 
 		for (const mrData of myOpenMrs) {
@@ -50,7 +50,7 @@ class ShowMyOpenMergeRequests implements IBotCommandHandler {
 		}
 
 		if (myOpenMrs.length) {
-			const markup = this.renderMarkupForReply(myOpenMrs);
+			const markup = this.renderMarkup(myOpenMrs);
 			return ctx.replyWithHTML(markup, { disable_web_page_preview: true });
 		} else {
 			return ctx.replyWithMarkdownV2(`*${dictionary.commands.emptyMrs}`);
