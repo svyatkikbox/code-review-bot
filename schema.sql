@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS users
 CREATE TABLE IF NOT EXISTS subscriptions
 (
 	id SERIAL PRIMARY KEY,
-	user_id integer NOT NULL,
+	user_id integer REFERENCES users,
 	project_ids integer[] NOT NULL
 );
 
@@ -17,5 +17,5 @@ CREATE TABLE IF NOT EXISTS merge_requests_data_cache
 (
 	id SERIAL PRIMARY KEY,
 	project_id integer NOT NULL,
-	data jsonb
+	data_cache json NOT NULL
 );
