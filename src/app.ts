@@ -18,10 +18,10 @@ import { MergeRequestRepository } from './gitlab/merge-requests/repository';
 import { NoteRepository } from './gitlab/notes/repository';
 import { ProjectRepository } from './gitlab/projects/repository';
 import { UserRepository } from './gitlab/users/repository';
-import { AwardMap } from './mappers/award-mapper';
+import { AwardMap } from './gitlab/awards/mapper';
 import { MergeRequestMap } from './gitlab/merge-requests/mapper';
-import { NoteMap } from './mappers/note-mapper';
-import { SubscriptionMap } from './mappers/subscription-mapper';
+import { NoteMap } from './gitlab/notes/mapper';
+import { SubscriptionMap } from './bot/subscription/mapper';
 
 const { BOT_TOKEN } = config;
 const bot = new Telegraf<Scenes.SceneContext>(BOT_TOKEN);

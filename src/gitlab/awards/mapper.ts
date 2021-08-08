@@ -1,5 +1,5 @@
-import { MergeRequestAward, MergeRequestAwardRaw } from '../gitlab/types';
-import { IMapper } from './mapper-interface';
+import { MergeRequestAward, MergeRequestAwardRaw } from '../types';
+import { IMapper } from '../../mapper-interface';
 
 export class AwardMap
 	implements IMapper<MergeRequestAward, MergeRequestAwardRaw>

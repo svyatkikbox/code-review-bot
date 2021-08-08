@@ -1,5 +1,5 @@
-import { Subscription, SubscriptionRaw } from '../bot/subscription/types';
-import { IMapper } from './mapper-interface';
+import { Subscription, SubscriptionRaw } from './types';
+import { IMapper } from '../../mapper-interface';
 
 // TODO finish mapper
 export class SubscriptionMap implements IMapper<Subscription, SubscriptionRaw> {

@@ -1,5 +1,5 @@
-import { User, UserRaw } from '../gitlab/types';
-import { IMapper } from './mapper-interface';
+import { User, UserRaw } from '../types';
+import { IMapper } from '../../mapper-interface';
 
 export class UserMap implements IMapper<User, UserRaw> {
 	toModel(entity: User): UserRaw {

@@ -1,4 +1,4 @@
-import { IMapper } from '../../mappers/mapper-interface';
+import { IMapper } from '../../mapper-interface';
 import { IHttpService } from '../http-service';
 import { MergeRequest, MergeRequestRaw } from '../types';
 import { IMergeRequestRepository } from './repository-interface';

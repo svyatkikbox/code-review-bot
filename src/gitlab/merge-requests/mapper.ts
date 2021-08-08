@@ -1,5 +1,5 @@
 import { MergeRequest, MergeRequestRaw } from '../types';
-import { IMapper } from '../../mappers/mapper-interface';
+import { IMapper } from '../../mapper-interface';
 
 export class MergeRequestMap implements IMapper<MergeRequest, MergeRequestRaw> {
 	toModel(entity: MergeRequest): MergeRequestRaw {

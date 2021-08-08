@@ -1,4 +1,4 @@
-import { IMapper } from 'src/mappers/mapper-interface';
+import { IMapper } from 'src/mapper-interface';
 import { HttpService } from '../http-service';
 import { MergeRequestNote, MergeRequestNoteRaw } from '../types';
 import { INoteRepository } from './repository-interface';

@@ -1,4 +1,4 @@
-import { IMapper } from '../../mappers/mapper-interface';
+import { IMapper } from '../../mapper-interface';
 import { SqlDatabase } from '../database/database';
 import { ISubscriptionRepository } from './repository-interface';
 import { Subscription, SubscriptionRaw } from './types';
