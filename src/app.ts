@@ -19,7 +19,7 @@ import { NoteRepository } from './gitlab/notes/repository';
 import { ProjectRepository } from './gitlab/projects/repository';
 import { UserRepository } from './gitlab/users/repository';
 import { AwardMap } from './mappers/award-mapper';
-import { MergeRequestMap } from './mappers/merge-request-mapper';
+import { MergeRequestMap } from './gitlab/merge-requests/mapper';
 import { NoteMap } from './mappers/note-mapper';
 import { SubscriptionMap } from './mappers/subscription-mapper';
 
