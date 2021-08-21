@@ -16,6 +16,6 @@ CREATE TABLE IF NOT EXISTS subscriptions
 CREATE TABLE IF NOT EXISTS merge_requests_data_cache
 (
 	id SERIAL PRIMARY KEY,
-	project_id integer NOT NULL,
-	data_cache json NOT NULL
+	project_id integer NOT NULL UNIQUE,
+	data_cache jsonb NOT NULL
 );
