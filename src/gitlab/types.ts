@@ -92,6 +92,12 @@ export type MergeRequestNote = Omit<MergeRequestNoteRaw, 'created_at'> & {
 	resolved: boolean;
 };
 
+export type ReviewData = {
+	mergeRequest: MergeRequest;
+	awards: MergeRequestReviewAwards;
+	notes: MergeRequestNote[];
+};
+
 export type PaginationParams = {
 	perPage?: number;
 	page?: number;

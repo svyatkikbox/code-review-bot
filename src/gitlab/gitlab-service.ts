@@ -7,6 +7,7 @@ import {
 	MergeRequest,
 	MergeRequestNote,
 	MergeRequestReviewAwards,
+	ReviewData,
 } from './types';
 
 export class GitlabService {
@@ -143,5 +144,22 @@ export class GitlabService {
 		}
 
 		return mrs;
+	}
+
+	async getProjectReviewsData(projectId: number): Promise<ReviewData[]> {
+		const mergeRequestsData =
+			await this.mergeRequestRepo.getProjectMergeRequests(projectId);
+
+		const reviewsData: ReviewData[] = [];
+		for (const mergeRequest of mergeRequestsData) {
+			const [notes, awards] = await Promise.all([
+				this.noteRepo.getMergeRequestNotes(projectId, mergeRequest.id),
+				this.awardRepo.getMergeRequestAwards(projectId, mergeRequest.id),
+			]);
+
+			reviewsData.push({ mergeRequest, notes, awards });
+		}
+
+		return reviewsData;
 	}
 }

@@ -40,6 +40,7 @@ const userRepo = new UserRepository(gitlabAPI);
 const projectRepo = new ProjectRepository(gitlabAPI);
 const mergeRequestRepo = new MergeRequestRepository(
 	gitlabAPI,
+	database,
 	new MergeRequestMap()
 );
 const awardRepo = new AwardRepository(gitlabAPI, new AwardMap());
@@ -99,4 +100,12 @@ bot.hears(dictionary.buttons.showMyOpenMrsCommand, ctx =>
 	showMyOpenMrsCommand.handler(ctx)
 );
 
-export { bot, userRepo, projectRepo, sqlSubscriptionRepo, gitlabService };
+export {
+	bot,
+	userRepo,
+	projectRepo,
+	sqlSubscriptionRepo,
+	mergeRequestRepo,
+	database,
+	gitlabService,
+};

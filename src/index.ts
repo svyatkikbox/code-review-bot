@@ -1,5 +1,6 @@
 import { bot } from './app';
 import config from './config';
+import { updateReviewDataTask } from './tasks/update-review-data';
 const { PORT, WEBHOOK_URL } = config;
 
 bot.launch({
@@ -8,6 +9,8 @@ bot.launch({
 		port: PORT,
 	},
 });
+
+updateReviewDataTask.start();
 
 process.once('SIGINT', () => bot.stop('SIGINT'));
 

@@ -7,4 +7,6 @@ export interface IMergeRequestRepository {
 	): Promise<MergeRequest[]>;
 
 	getProjectMergeRequests(projectId: number): Promise<MergeRequest[]>;
+
+	getProjectReviewsData(projectId: number): Promise<any>;
 }
